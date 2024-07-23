@@ -1,0 +1,22 @@
+{% extends 'profile/base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block tilte %}
+Register
+{% endblock %}
+
+{% block hero %}
+<div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+  <form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    
+    <input type="submit" value="submit" class = "btn btn-primary">
+  </form>
+</div>
+
+</form>
+</div>
+{% endblock %} 

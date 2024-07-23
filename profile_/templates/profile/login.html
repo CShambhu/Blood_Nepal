@@ -1,0 +1,20 @@
+{% comment %} {% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block tilte %}
+  Login
+{% endblock %}
+
+{% block hero %}
+  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form1|crispy }}
+      <p>
+        Already have an account? <a href="{% url 'signup' %}"><b>Sign Up</b></a>
+      </p>
+      <button type="submit" class="btn btn-success">submit</button>
+    </form>
+  </div>
+{% endblock %} {% endcomment %}

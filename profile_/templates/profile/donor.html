@@ -1,0 +1,36 @@
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+Donor's
+{% endblock title %}
+
+{% block body %}
+
+
+<!-- # profile of User who is logged in -->
+{% for donor in donor  %}
+  <div class="grid-container flex justify-content-center display: grid">
+    <div class='grid-item'>
+      <img src={{donor.profile_photo.url}} style="width:200px;height:200px;" alt="">
+      <h3>Name: {{donor.full_name}}</h3>
+      Gender: {{donor.gender}}<br>
+      Weight: {{donor.weight}}<br>
+
+       {% comment %} Phone : {{donor.phone}}<br>
+      Email : {{donor.email}}<br>  {% endcomment %}
+      Location : {{donor.location}} <br>
+      Blood group : {{donor.blood_group}} <br>
+    </div>
+    <div class='flex justify-content-center '>
+      <button type='submit' class='btn btn-primary'> <a href="{% url 'requestblood' %}"> Request blood </a></button>
+    </div>
+  </div>
+  {% endfor %}
+  <hr>
+  <hr>
+  {% endblock body %}
+
+
+  {% block hero %}
+  {% endblock hero %}

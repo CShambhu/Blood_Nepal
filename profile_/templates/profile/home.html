@@ -1,0 +1,69 @@
+{% extends 'profile/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Home
+{% endblock %}
+
+<!-- Hero Section -->
+
+{% block body %}
+<section class="text-gray-600 body-font">
+  <div class="container flex flex-wrap px-5 py-3 mx-auto items-center">
+    <div class="md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"></h1>
+      <p class="leading-relaxed text-base">
+        <b>Blood Nepal</b> aims to connect the donor and receiver directly without any intervention for fresh blood
+        requirements.
+      </p>
+      <br />
+      <div>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search Blood" aria-label="Search" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="flex flex-col md:w-1/2 md:pl-12">
+      <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe ipsa eaque consectetur debitis, facere illo.
+          Nemo alias voluptas, quos iste pariatur delectus eaque saepe, sint assumenda in voluptate praesentium quaerat
+          ratione cum? Nulla molestiae quaerat ad perspiciatis provident voluptas quos.</p>
+      </div>
+    </div>
+    {% else %}
+    {% block login_form %}
+    <div class="flex flex-col md:w-1/2 md:pl-12">
+      <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% comment %}Login Form{% endcomment %}
+          <div class="form-group">
+            <label for="exampleInputEmail1">username</label>
+            <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder=""
+              required />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="" required />
+          </div>
+          <br />
+
+          <p>
+            Already have an account? <a href="{% url 'register_user' %}"><b>Register</b></a>
+          </p>
+          <input type="submit" value="Login" class="btn btn-primary" />
+        </form>
+      </div>
+    </div>
+    {% endblock login_form %}
+
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block loginbar %}
+{% endblock %}

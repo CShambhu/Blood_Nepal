@@ -1,0 +1,28 @@
+{% extends 'profile/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block title %}
+Update_Profile
+{% endblock title %}
+
+{% block body %}
+<!-- # profile of User who is logged in -->
+
+  <div class="grid-container flex justify-content-center display: grid">
+    <div class='grid-item'>
+      <h1>Update_Profile</h1>
+    </div>
+  </div>
+  <hr>
+  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+  {% endblock body %}
+
+
+  {% block hero %}
+  {% endblock hero %}

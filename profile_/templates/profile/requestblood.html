@@ -1,0 +1,24 @@
+{% extends 'profile/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Request Blood
+{% endblock %}
+
+{% block body %}
+  <h3>Username: {{ username }}</h3>
+  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+    <form method="post" enctype="multipart/form-data">
+      <p>Please fillout the form to request blood</p><br />
+      <h3>Blood Requisition Form</h3>
+
+      {% csrf_token %}
+      {{ P_Form|crispy }}
+      {% comment %} <p>
+        Already have an account? <a href="{% url 'login' %}"><b>Login</b></a>
+      </p> {% endcomment %}
+      <button type="submit" class="btn btn-success">submit</button>
+    </form>
+  </div>
+{% endblock %}

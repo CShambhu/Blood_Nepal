@@ -1,0 +1,29 @@
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+  Blog
+{% endblock %}
+{% comment %} <a href="{% url 'read_post' Blogmodel.id %}"> {% endcomment %}
+{% block body %}
+
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-4 mx-auto">
+<button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'blog' %}">Back</a></button>
+<button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'write_blog' %}">Write Blog</a></button>
+<br><br></div>
+     <div class='container text-justify px-5 py-4 mx-auto'> 
+      <strong> title : {{blog.title}} </strong><br>
+      content: {{blog.content}} 
+      <br><hr>
+       
+       Written by :-<br>
+       <em> Username: {{blog.user }} <br>Full name: {{ blog.signup}}<br>
+      Email: {{ blog.signup.email}}</em>  <br><br>
+     
+    </div>  
+  <hr>
+{% endblock %}
+
+{% block hero %}
+{% endblock %}

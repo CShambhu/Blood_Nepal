@@ -1,0 +1,31 @@
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block body %}
+<!-- # profile of User who is logged in -->
+  <div class="grid-container flex justify-content-center display: grid">
+    <div class='grid-item'>
+  <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'home' %}">History</a></button>
+  <img src={{signup_user.profile_photo.url}} style="width:200px;height:200px;" alt=""> 
+      <h3>Name: {{signup_user.full_name}}</h3>
+      Gender: {{signup_user.gender}}<br>
+       Phone : {{signup_user.phone}}<br>
+      Email : {{signup_user.email}}<br> 
+      Location : {{signup_user.location}} <br>
+      Blood group : {{signup_user.blood_group}} <br>
+      Weight : {{signup_user.weight}} <br>
+    </div>
+  </div>
+  <hr>
+
+  <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'update-profile' %}">Update Profile</a></button>
+
+  {% endblock body %}
+
+
+  {% block hero %}
+  {% endblock hero %}

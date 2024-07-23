@@ -1,0 +1,26 @@
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+  Blog
+{% endblock %}
+
+{% block body %}
+<div class="container text-justify px-5 py-4 mx-auto">
+  <button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'write_blog' %}">Write Blog</a></button>
+</div>
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-4 mx-auto">
+      {% for blogs in blog_post %}
+          <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
+        </li><hr>
+          <a href="{% url 'read_post' blogs.id %}"> Read more </a> 
+          <hr>
+      {% endfor %}
+    </div>
+  <hr>
+
+{% endblock %}
+
+{% block hero %}
+{% endblock %}
