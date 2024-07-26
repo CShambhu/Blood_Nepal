@@ -1,0 +1,45 @@
+{% extends 'profile/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Search
+{% endblock %}
+
+<!-- Hero Section -->
+
+{% block body %}
+  {% if blood_search or location_search %}
+  <div class="flex items-center justify-center h-45">
+    <strong>You searched for {{ searched }}</strong><br /><hr />
+  </div>
+    <div class="flex items-center justify-center h-45">
+      {% for blood in blood_search %}
+        Name: {{ blood.full_name }}<br />
+        Blood Group: {{ blood.blood_group }}<br />
+        Gender: {{ blood.gender }}<br />
+        Location: {{ blood.location }}<br />
+        Profile: {{ blood.profile_photo }}<hr />
+      {% endfor %}
+    </div>
+<br>
+    <div class="flex items-center justify-center h-64">
+      {% for blood in location_search %}
+        Name: {{ blood.full_name }}<br />
+        Blood Group: {{ blood.blood_group }}<br />
+        Gender: {{ blood.gender }}<br />
+        Location: {{ blood.location }}<br />
+        Profile: {{ blood.profile_photo }}<hr />
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="flex items-center justify-center h-64">
+      Your search for {{ searched }} is not available. <br />
+      <strong>No Data available</strong>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block loginbar %}
+
+{% endblock %}

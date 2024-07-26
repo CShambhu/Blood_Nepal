@@ -13,6 +13,9 @@ urlpatterns = [
     path('logout', views.Logout_User, name='logout'),
     path('register_user', views.register_user, name='register_user'),
     path('donor', views.donors_profile, name='donor'),
+    path('search', views.search, name='search'),
+   
+
 
     # path('sample', views.loginform, name='sample'),
     # path("save_signup", views.save_Signup, name="save_signup"),

@@ -11,6 +11,22 @@ from django.contrib.auth.models import User
 
 
 # Create your views here.
+#Searching on basis of location/blood_group
+@login_required
+def search(request):
+    username = request.user.username
+    if request.method == "POST":
+        searched = request.POST["searched"]
+        # pattern = r'^(a|A|b|B|o|O|ab|AB)(\+|-)$'
+        # blood_search = SignUp.objects.filter(blood_group__regex = pattern)
+        blood_search = SignUp.objects.filter(blood_group__iexact = searched)
+        location_search = SignUp.objects.filter(location__contains = searched)
+        return render(request, "profile/search.html", {'username':username,'searched':searched, 'blood_search':blood_search, 'location_search':location_search})
+
+    else:    
+        return render(request, "profile/search.html", {'username':username})
+    
+
 # Donors Profile
 @login_required
 def donors_profile(request):
