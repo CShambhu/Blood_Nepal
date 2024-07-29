@@ -13,7 +13,7 @@ def read_post(request,id):
     username = request.user.username # Gets the username of user who is logged in from User table
     blog = Blog.objects.get(id=id)
     blog_post = Blog.objects.all()
-    # signup = SignUp.objects.get (user = request.user) #Gets the SignUp data of loggedin user
+    #signup = SignUp.objects.get (user = request.user) #Gets the SignUp data of loggedin user
     return render(request, "blog/read_post.html",{'blog':blog, 'username': username,'blog_post':blog_post})
 
 @login_required

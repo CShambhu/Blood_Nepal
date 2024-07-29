@@ -156,13 +156,15 @@ def Logout_User(request):
 
 #Patient's Blood Request Form
 @login_required
-def save_patient(request):
+def save_patient(request,id):
     username = request.user.username # Gets the username of user who is logged in from User table
+    # Get the full data of donor to whom user is requesting 
+    signup = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
+    signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
     P_Form = PatientsForm()
     if request.method == "POST":
         user = request.user
         signup, created = SignUp.objects.get_or_create(user=user, defaults={'full_name': user.get_full_name(), 'email': user.email})
-
         P_Form = PatientsForm(request.POST,request.FILES)
         if P_Form.is_valid():
             full_name = P_Form.cleaned_data['full_name']
@@ -193,16 +195,5 @@ def save_patient(request):
                 return redirect('requestblood')    
         else:
             P_Form = PatientsForm()
-    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username})
-
-# Get the full data of user 
-def users_data(request):
-    username = request.user.username # Gets the username of user who is logged in from User table
-    full_name = request.user.full_name
-    try:
-        signup_user = SignUp.objects.get(full_name = request.full_name)
-        return render(request, "profile/requestblood.html", {'signup_user':signup_user, 'username': username, 'full_name':full_name})
-    except SignUp.DoesNotExist:
-        messages.success(request,("Couldn't get data"))
-        return redirect('requestblood')
+    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup,'signup_user':signup_user})
 

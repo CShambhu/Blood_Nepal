@@ -9,35 +9,121 @@
 <!-- Hero Section -->
 
 {% block body %}
-  {% if blood_search or location_search %}
-  <div class="flex items-center justify-center h-45">
-    <strong>You searched for {{ searched }}</strong><br /><hr />
+
+{% if blood_search or location_search %}
+
+{% for blood in blood_search %}
+
+<section class="vh-40" style="background-color: rgb(241 245 249);">
+  <div class="container py-5 h-15">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img src={{blood.profile_photo.url}}
+                alt="" class="img-fluid my-4" style="width: 300px;" />
+                <p>{{donor.full_name}}</p>
+
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Username: {{blood.user}}</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <h6>Full Name</h6>
+                  <p class="text-muted">{{blood.full_name}}</p>
+                </div>
+                  <div class="col-6 mb-3">
+                    <h6>Gender</h6>
+                    <p class="text-muted">{{blood.gender}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Blood Group</h6>
+                    <p class="text-muted">{{blood.blood_group}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Weight</h6>
+                    <p class="text-muted">{{blood.weight}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Location</h6>
+                    <p class="text-muted">{{blood.location}}</p>
+                  </div>
+                </div>
+                <a href="{% url 'requestblood' blood.id %}"> 
+                  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood 
+                  </button>
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-    <div class="flex items-center justify-center h-45">
-      {% for blood in blood_search %}
-        Name: {{ blood.full_name }}<br />
-        Blood Group: {{ blood.blood_group }}<br />
-        Gender: {{ blood.gender }}<br />
-        Location: {{ blood.location }}<br />
-        Profile: {{ blood.profile_photo }}<hr />
-      {% endfor %}
+</section>
+{% endfor %}
+{% for blood in location_search %}
+<section class="vh-40" style="background-color: #f4f5f7;">
+  <div class="container py-5 h-15">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img src={{blood.profile_photo.url}}
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+              <h5>{{blood.full_name}}</h5>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Username: {{blood.user}}</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Gender</h6>
+                    <p class="text-muted">{{blood.gender}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Blood Group</h6>
+                    <p class="text-muted">{{blood.blood_group}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Weight</h6>
+                    <p class="text-muted">{{blood.weight}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Location</h6>
+                    <p class="text-muted">{{blood.location}}</p>
+                  </div>
+                </div>
+                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded btn-md">
+                  Request Blood
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-<br>
-    <div class="flex items-center justify-center h-64">
-      {% for blood in location_search %}
-        Name: {{ blood.full_name }}<br />
-        Blood Group: {{ blood.blood_group }}<br />
-        Gender: {{ blood.gender }}<br />
-        Location: {{ blood.location }}<br />
-        Profile: {{ blood.profile_photo }}<hr />
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="flex items-center justify-center h-64">
-      Your search for {{ searched }} is not available. <br />
-      <strong>No Data available</strong>
-    </div>
-  {% endif %}
+  </div>
+</section>
+{% endfor %}
+
+{% else %}
+<div class="flex flex-col items-center justify-center text-center">
+
+<div class="alert alert-warning alert-dismissible fade show col-md-3" role="alert">
+  <strong>Data not available</strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</div>
+
+{% endif %}
 {% endblock %}
 
 {% block loginbar %}
