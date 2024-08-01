@@ -8,19 +8,17 @@ Blog
 {% block hero %}
 
 <div class = 'container'>
-<button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'blog' %}">Back</a></button>
+  <a href="{% url 'blog' %}">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
+  Back
+</button>
+</a>
 
 </div>
 <form method="post">
   <div class="mb-5 container">
     {% csrf_token %}
     {{blog_form|crispy}}
-    <fieldset disabled>
-      <div class="form-group">
-        <label for="disabledTextInput">writter</label>
-        <input type="text" id="disabledTextInput" class="form-control" placeholder={{ username }}>
-      </div>
-    </fieldset>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}

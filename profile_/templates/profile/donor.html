@@ -17,7 +17,7 @@ Donor's
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white"
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img src={{donor.profile_photo.url}}
+              <img src={{ donor.profile_photo.url }}
                 alt="" class="img-fluid my-4" style="width: 300px;" />
                 <p><strong>{{donor.full_name}}</strong></p>
             </div>
@@ -46,14 +46,29 @@ Donor's
                     <h6>Location</h6>
                     <p class="text-muted">{{donor.location}}</p>
                   </div>
+                  <div class="col-6 mb-3">
+                    <h6>Last donated</h6>
+                    <p class="text-muted">{{donor.last_donation}}</p>
+                  </div>  
+                  <div class="col-6 mb-3">
+                    Ready to donate?
+                    <form>
+                      {% if donor.ready_to_donate == 'yes' %}
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
+                      <label for="yes">Yes</label>
+
+                      <a href="{% url 'requestblood' donor.id %}">    
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
+                      </a>
+                      {% else %}
+                      
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red; ">
+                      <label for="no">No</label>
+                      {% endif %}
+                    </form>
+                  </div>
                 </div>
               
-                <a href="{% url 'requestblood' donor.id %}"> 
-                   
-           <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood 
-          </button> 
-              </a>
-              </div>
             </div>
           </div>
         </div>

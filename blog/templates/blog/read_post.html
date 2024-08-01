@@ -9,19 +9,32 @@
 
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-4 mx-auto">
-<button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'blog' %}">Back</a></button>
-<button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'write_blog' %}">Write Blog</a></button>
-<br><br></div>
-     <div class='container text-justify px-5 py-4 mx-auto'> 
-      <strong> title : {{blog.title}} </strong><br>
-      content: {{blog.content}} 
-      <br><hr>
+      <a href="{% url 'blog' %}">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
        
-       Written by :-<br>
-       <em> Username: {{blog.user }} <br>Full name: {{ blog.signup}}<br>
-      Email: {{ blog.signup.email}}</em>  <br><br>
-     
-    </div>  
+          Back
+        </button>
+      </a>
+      <a href="{% url 'write_blog' %}">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
+        
+          Write Blog
+      </button>
+    </a>
+</div>
+
+<div class="card text-justify px-5 py-4 mx-auto">
+  <div class="card-header">
+    <strong> Title : {{blog.title}} </strong>
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <p>{{blog.content}} </p><br>
+      <footer class="blockquote-footer"> Written by :-<br><cite title="Source Title">Full name: {{ blog.signup}}<br>
+        Email: {{ blog.signup.email}}</cite></footer>
+    </blockquote>
+  </div>
+</div>
   <hr>
 {% endblock %}
 

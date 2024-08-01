@@ -21,16 +21,19 @@ def write_blog(request):
     username = request.user.username # Gets the username of user who is logged in from User table
     # signup_user = Blog.objects.all()
     # signup = SignUp.objects.get (user = request.user) #Gets the SignUp data of loggedin user
+    signup_user = SignUp.objects.all()
     blog_form = BlogForm()
-    context = {'username':username, 'blog_form':blog_form}
-    if request.method == "POST":
-        user = request.user
-        signup, created = SignUp.objects.get_or_create(user=user, defaults={'full_name': user.get_full_name(), 'email': user.email})
-        blog_form = BlogForm(request.POST)
+    context = {'username':username, 'blog_form':blog_form,'signup_user':signup_user} 
+    user_profile = SignUp.objects.filter(user=request.user).exists()
+    if user_profile:
+        if request.method == "POST":
+            user = request.user
+            signup = SignUp.objects.get(user=request.user)
+        blog_form = BlogForm(request.POST,request.FILES)
         if blog_form.is_valid():
-            title = blog_form.cleaned_data['title'],
-            date = blog_form.cleaned_data['date'],
-            content = blog_form.cleaned_data['content'],
+            title = blog_form.cleaned_data['title']
+            date = blog_form.cleaned_data['date']
+            content = blog_form.cleaned_data['content']
             am = Blog.objects.create(
                 user = user,
                 signup = signup,
@@ -40,12 +43,16 @@ def write_blog(request):
                 )
             am.save()
             messages.success(request,('You have created a blog post.'))
-            return redirect ( "blog")
-
+            return redirect('blog')
+            
+        else:
+            blog_form = BlogForm()
     else:
-        blog_form = BlogForm()
-
+        messages.success(request,('Please complete your profile to write blog.'))
+        return redirect('blog')
     return render(request, "blog/write_blog.html", context)
+
+
 
 def blog(request):
     username = request.user.username # Gets the username of user who is logged in from User table

@@ -11,10 +11,14 @@
 
 
  <div class="container text-justify px-5 py-4 mx-auto">
-  <button class="inline-flex items-center bg-blue-200 border-0 py-1 px-3 focus:outline-none hover:bg-blue-300 rounded text-base mt-4 md:mt-0"><a href="{% url 'write_blog' %}">Write Blog</a></button>
+  <a href="{% url 'write_blog' %}">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
+        Write Blog
+  </button>
+</a>
 </div>
   <section class="text-gray-600 body-font">
-    <div class="container px-5 py-4 mx-auto">
+    <div class="container px-5 py-1 mx-auto justify-content-centre">
       {% for blogs in blog_post %}
           <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
         </li><hr>

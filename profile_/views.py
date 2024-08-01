@@ -49,9 +49,12 @@ def profile(request):
     try:
         signup_user = SignUp.objects.get(user = request.user)
         return render(request, "profile/profile.html", {'signup_user':signup_user, 'username': username})
+    
     except SignUp.DoesNotExist:
         messages.success(request,('Please fill up the below form to use features.'))
         return redirect('signup')
+    
+    
 
 def update_profile(request):
     username = request.user.username # Gets the username of user who is logged in from User table
@@ -62,8 +65,8 @@ def update_profile(request):
         return redirect('profile')
     return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user':signup_user})
 
+
 #User's Signup Form
-@login_required
 def save_Signup(request):
     username = request.user.username # Gets the username of user who is logged in from User table
     id = request.user.id
@@ -81,8 +84,10 @@ def save_Signup(request):
             location =  form.cleaned_data['location']
             blood =  form.cleaned_data['blood_group']
             weight =  form.cleaned_data['weight']
-
-            em = SignUp.objects.create(user = user,
+            donate = form.cleaned_data['ready_to_donate']
+            last_donation = form.cleaned_data['last_donation']
+            em = SignUp.objects.create(
+                user = user,
                 full_name = name, 
                 email = email, 
                 phone = phone, 
@@ -91,10 +96,12 @@ def save_Signup(request):
                 location = location,
                 blood_group = blood,
                 weight = weight,
+                ready_to_donate = donate,
+                last_donation = last_donation
 
             )
             em.save()
-            messages.success(request,("You have successfully completed your profile"))
+            messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
             return redirect('profile')
         else:
             form = SignUp_Form()
@@ -112,12 +119,16 @@ def Login_User(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, (f" Welcome "+username+"."))
-                try:
+                
+                try :
                     signup_user = SignUp.objects.get(user = request.user)
+                    # messages.success(request,('blood request sent.'))
                     return render(request, "profile/home.html", {'signup_user':signup_user, 'username': username})
+                
                 except SignUp.DoesNotExist:
-                    messages.success(request,('Your data is incomplete. Please visit your profile.'))
+                    messages.success(request,("Your data is incomplete. Please visit your profile."))
                     return redirect('home')
+                
                  
             else:
                 messages.error(request, "Incorrect Username and Password")
@@ -129,19 +140,10 @@ def Login_User(request):
 
 #Register User
 def register_user(request):
-    # username = request.user.username # Gets the username of user who is logged in from User table
-    # context = {'username':username}
-    # messages.info(request,('you are already registered'))
-    # return render(request, "home.html", context)
-
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            # username = form.cleaned_data['username']
-            # password = form.cleaned_data['password1']
-            # user = authenticate(username = username, password = password)
-            # login(request, user)
             messages.success(request, ('Registration Successful'))
             return redirect('home')
     else:
@@ -156,44 +158,44 @@ def Logout_User(request):
 
 #Patient's Blood Request Form
 @login_required
-def save_patient(request,id):
+def request_blood(request,id):
     username = request.user.username # Gets the username of user who is logged in from User table
     # Get the full data of donor to whom user is requesting 
-    signup = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
+    signup_donor = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
     signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
     P_Form = PatientsForm()
-    if request.method == "POST":
-        user = request.user
-        signup, created = SignUp.objects.get_or_create(user=user, defaults={'full_name': user.get_full_name(), 'email': user.email})
-        P_Form = PatientsForm(request.POST,request.FILES)
-        if P_Form.is_valid():
-            full_name = P_Form.cleaned_data['full_name']
-            hospital = P_Form.cleaned_data['hospital']
-            patient_department = P_Form.cleaned_data['patients_department']
-            patients_phone = P_Form.cleaned_data['patients_phone']
-            patients_blood_group = P_Form.cleaned_data['patients_blood_group']
-            blood_pint = P_Form.cleaned_data['blood_pint']
-            requisition_form = P_Form.cleaned_data['requisition_form']
-            am = Patient.objects.create(
-                user = user,
-                signup = signup,
-                full_name = full_name,
-                hospital = hospital,
-                patients_department = patient_department,
-                patients_phone = patients_phone,
-                patients_blood_group = patients_blood_group,
-                blood_pint = blood_pint,
-                requisition_form = requisition_form
-            )
-            am.save()
-            try:
-                signup_user = SignUp.objects.get(user = request.user)
-                messages.success(request,('blood request sent.'))
-                return render(request, "profile/home.html", {'signup_user':signup_user, 'username': username})
-            except SignUp.DoesNotExist:
-                messages.success(request,('Please complete your profile to request blood.'))
-                return redirect('requestblood')    
-        else:
-            P_Form = PatientsForm()
-    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup,'signup_user':signup_user})
+    user_profile = SignUp.objects.filter(user=request.user).exists()
+    if user_profile:
+        if request.method == "POST":
+            user = request.user
+            signup = SignUp.objects.get(user=request.user) # gets the signup foreign key of the logged in user
+            P_Form = PatientsForm(request.POST,request.FILES)
+            if P_Form.is_valid():
+                full_name = P_Form.cleaned_data['full_name']
+                hospital = P_Form.cleaned_data['hospital']
+                patient_department = P_Form.cleaned_data['patients_department']
+                patients_phone = P_Form.cleaned_data['patients_phone']
+                patients_blood_group = P_Form.cleaned_data['patients_blood_group']
+                blood_pint = P_Form.cleaned_data['blood_pint']
+                requisition_form = P_Form.cleaned_data['requisition_form']
+                am = Patient.objects.create(
+                    user = user,
+                    signup = signup,
+                    full_name = full_name,
+                    hospital = hospital,
+                    patients_department = patient_department,
+                    patients_phone = patients_phone,
+                    patients_blood_group = patients_blood_group,
+                    blood_pint = blood_pint,
+                    requisition_form = requisition_form
+                )
+                am.save()
+                messages.success(request,(f'You have sent blood request to {signup_donor}.'))
+                return redirect( "home")    
+            else:
+                P_Form = PatientsForm()
+    else:
+        messages.success(request,('Please complete your profile to request blood.'))
+        return redirect('signup')
+    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor,'signup_user':signup_user})
 

@@ -1,6 +1,5 @@
 {% extends 'profile/base.html' %}
 
-
 {% load crispy_forms_tags %}
 
 {% block tilte %}
@@ -8,9 +7,6 @@
 {% endblock %}
 
 {% block hero %}
-  <h3>ID: {{ id }}</h3>
-  <h3>Username: {{ username }}</h3>
-  <hr>
   <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}

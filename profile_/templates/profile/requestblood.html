@@ -7,9 +7,15 @@
 {% endblock %}
 
 {% block body %}
-  Sending request to:<br /> Username: {{ signup.user }}<br />
+  
+<div class="flex flex-wrap px-0 py-1 items-center text-base justify-center">
+  You're sending blood request to:<br /> Username: {{ signup.user }}<br />
   Full name: {{ signup.full_name }}<br />
-  You're requesting for {{ signup.blood_group }} blood.<div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+  You're requesting for {{ signup.blood_group }} blood.<div class="flex flex-wrap px-5 py-3 items-center text-base justify-center"> 
+  </div>
+
+  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+
     <form method="post" enctype="multipart/form-data">
       <p>Please fillout the form to request blood</p><br />
       <h3>Blood Requisition Form</h3>

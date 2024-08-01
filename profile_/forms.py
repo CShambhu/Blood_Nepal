@@ -3,12 +3,13 @@ from django import forms
 from django.forms import ValidationError
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 #Users SignUp Form
 class SignUp_Form(forms.Form):
     GenderChoices = [
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-        ('Other', 'Other')
+        ('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')
     ]
 
     Blood_Group_Choices = [
@@ -20,6 +21,9 @@ class SignUp_Form(forms.Form):
         ('B-', 'B negative'),
         ('AB+', 'AB positive'),
         ('AB-', 'AB negative'),
+    ]
+    R_CHOICES = [
+        ('yes', 'Yes'),   ('no', 'No')   
     ]
 
     #name
@@ -40,23 +44,26 @@ class SignUp_Form(forms.Form):
         )
     
     #phone
-    phone=forms.IntegerField()
+    phone = forms.CharField(
+        widget=forms.TextInput(
+             attrs={
+                 "class":"form-control",
+                 'maxlength': '10'
+             }
+        )
+    )
+
+
     
     #gender
-    gender = forms.CharField(
-        widget=forms.Select(choices=GenderChoices),
-        max_length=6
+    gender = forms.ChoiceField(
+        choices=GenderChoices,
+        widget=forms.RadioSelect
         )
     
     # Weight
-    weight = forms.IntegerField(
-        widget= forms.NumberInput(
-            attrs=(
-            {'class':'form-control',
+    weight = forms.IntegerField()
 
-            })
-        )
-    )
     
     #image
     profile_photo = forms.ImageField(
@@ -82,10 +89,18 @@ class SignUp_Form(forms.Form):
         max_length=3
         )
 
-    # def clean(self):
-    #     if 'password' in self.cleaned_data and 'confirm_password' in self.cleaned_data and self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
-    #         raise forms.ValidationError("The password does not match ")
-    #     return self.cleaned_data
+    #last donation date
+    last_donation = forms.DateField(widget=DateInput)
+    
+    #donar is ready to donate
+    ready_to_donate = forms.ChoiceField(
+        choices=R_CHOICES,
+        widget= forms.RadioSelect
+    )
+
+    
+
+    
 
 
 
@@ -121,13 +136,13 @@ class PatientsForm(forms.Form):
     )
 
     #Patients Phone
-    patients_phone = forms.IntegerField(
-        #         widget=forms.TextInput(
-        #     attrs={
-        #         "class":"form-control",
-        #         'placeholder':"patient's caretaker at hospital "
-        #     }
-        # )
+    patients_phone = forms.CharField(
+            widget=forms.TextInput(
+             attrs={
+                 "class":"form-control",
+                 'maxlength': '10'
+             }
+        )
     )
 
     #Required Blood Group
@@ -137,11 +152,12 @@ class PatientsForm(forms.Form):
         )
     
     #Amount of Blood Required
-    blood_pint = forms.IntegerField(
-                widget=forms.NumberInput(
+    blood_pint = forms.CharField(
+                widget=forms.TextInput(
             attrs={
                 "class":"form-control",
-                'placeholder':"amount of blood required"
+                'placeholder':"amount of blood required",
+                'max_length':'3'
             }
         )
     )
