@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
 
     'crispy_forms',
+    # 'django-crispy-forms',
     'crispy_bootstrap4',
 
 ]

@@ -56,15 +56,25 @@ def profile(request):
     
     
 
-def update_profile(request):
+def update_profile(request, id):
     username = request.user.username # Gets the username of user who is logged in from User table
-    signup_user = SignUp.objects.get(user = request.user)
-    form = SignUp_Form(request.POST) 
+    signup_user = SignUp.objects.get(id=id)
+    form = SignUp_Form(request.POST or None ,request.FILES or None, instance = signup_user) 
     if form.is_valid():
-        form.save
+        form.save()
         return redirect('profile')
-    return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user':signup_user})
+    else:
+        print(form.errors)
+    return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user': signup_user})
 
+def delete_profile(request, id):
+    username = request.user.username # Gets the username of user who is logged in from User table
+    signup_user = SignUp.objects.get(id=id)
+    if signup_user.delete():
+        messages.info(request,("Do you want to delete your profile ?"))
+        
+        return redirect('home')
+    
 
 #User's Signup Form
 def save_Signup(request):

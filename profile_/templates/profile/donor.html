@@ -50,22 +50,22 @@ Donor's
                     <h6>Last donated</h6>
                     <p class="text-muted">{{donor.last_donation}}</p>
                   </div>  
-                  <div class="col-6 mb-3">
-                    Ready to donate?
-                    <form>
-                      {% if donor.ready_to_donate == 'yes' %}
+                  <div class="col-10 mb-3">
+                    
+                      {% if donor.ready_to_donate == 'yes' %} <br>
                       <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
-                      <label for="yes">Yes</label>
+                      <label for="yes">   Is available for blood donation  !! </label>
 
                       <a href="{% url 'requestblood' donor.id %}">    
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
                       </a>
-                      {% else %}
+                       {% else %} 
+                      {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red; "> {% endcomment %}
                       
-                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red; ">
-                      <label for="no">No</label>
-                      {% endif %}
-                    </form>
+                      {% comment %} <input type="radio" checked > {% endcomment %}
+                      <label for="no">   Is NOT available for blood donation  !! </label>
+                      
+                       {% endif %} 
                   </div>
                 </div>
               

@@ -9,6 +9,8 @@
 {% block hero %}
   <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
     <form method="post" enctype="multipart/form-data">
+      <i>Name, Gender, Blood Group</i> are non-editable after profile is completed !!<br />
+
       {% csrf_token %}
       {{ form|crispy }}
       <button type="submit" class="btn btn-success">Submit</button>
