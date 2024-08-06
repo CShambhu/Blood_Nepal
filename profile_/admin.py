@@ -2,8 +2,16 @@ from django.contrib import admin
 
 from .models import SignUp, Patient
 # Register your models here.
-admin.site.register(SignUp)
-admin.site.register(Patient)
 
 class signupAdmin(admin.ModelAdmin):
-    list_display = ["id","full_name","email","location","blood_group"]
+    list_display = ["full_name","email","location","blood_group"]
+
+class PatientAdmin(admin.ModelAdmin):
+    list_display = ["full_name","hospital","patients_blood_group","required_date"]
+
+
+admin.site.register(SignUp,signupAdmin)
+admin.site.register(Patient,PatientAdmin)
+
+
+

@@ -10,85 +10,31 @@ Update_Profile
 
   <div class="grid-container flex justify-content-center display: grid">
     <div class='grid-item'>
-      <strong>Update_Profile</strong>
+      <strong>Update Profile</strong>
     </div>
   </div>
   <hr>
   <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
-    {% comment %} <div class="form-group">
-      {{ form.full_name.label_tag }}
-      {{signup_user.full_name}}
-      {{ form.full_name.errors }}
-    </div>
-    <div class="form-group">
-      {{ form.gender.label_tag }}
-      {{signup_user.gender}}
-      {{ form.gender.errors }}
-    </div>
-    <div class="form-group">
-      {{ form.blood_group.label_tag }}
-      {{signup_user.blood_group}}
-      {{ form.blood_group.errors }}
-    </div> {% endcomment %}
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-        <div class="form-group">
-        {% comment %} {{ form.full_name.label_tag }}
+  {% comment %} {{ form.full_name.label_tag }}
         {{form.full_name}}
         {{ form.full_name.errors }}
-      </div>   {% endcomment %}
-      <div class="form-group">
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        {{ form.email.errors }}
-      </div>
-      <div class="form-group">
-        {{ form.phone.label_tag }}
-        {{ form.phone }}
-        {{ form.phone.errors }}
-      </div>
-       {% comment %} <div class="form-group">
+         <div class="form-group">
         {{ form.gender.label_tag }}
         {{ form.gender}}
         {{ form.gender.errors }}
-      </div>    {% endcomment %}
-        <div class="form-group">
-        {{ form.weight.label_tag }}
-        {{ form.weight }}
-        {{ form.weight.errors }}
-      </div>
-      <div class="form-group">
-        {{ form.profile_photo.label_tag }}
-        {% if form.profile_photo %}
-            <div>
-                <img src="{{ signup_user.profile_photo.url }}" alt="Current Image" class="img-fluid my-3" style="width: 300px;">
-            </div>
-        {% endif %}
-
-        {{ form.profile_photo }}
-        {{ form.profile_photo.errors }}
-    </div>
-      <div class="form-group">
-        {{ form.location.label_tag }}
-        {{ form.location }}
-        {{ form.location.errors }}
-      </div>
-        {% comment %} <div class="form-group">
+      </div> 
+       <div class="form-group">
       {{ form.blood_group.label_tag }}       
         {{ form.blood_group }}
          {{ form.blood_group.errors }}
-      </div>    {% endcomment %}
-      <div class="form-group">
-        {{ form.last_donation.label_tag }}
-        {{ form.last_donation }}
-        {{ form.last_donation.errors }}
-      </div>
-      <div class="form-group">
-        {{ form.ready_to_donate.label_tag }}
-        {{ form.ready_to_donate }}
-        {{ form.ready_to_donate.errors }}
-        <button type="submit" value="Update" class="btn btn-success">Update</button>
+      </div>     {% endcomment %}
+      <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <br>
+        <input type="submit" value='Update' class="btn btn-success">
     </form>
+    
   </div>
   {% endblock %}
 
