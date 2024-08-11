@@ -63,11 +63,11 @@
                   </div>  
                   <div class="col-10 mb-3">
                     
-                      {% if donor.ready_to_donate == 'yes' %} <br>
+                      {% if blood.ready_to_donate == 'yes' %} <br>
                       <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
                       <label for="yes">   Is available for blood donation  !! </label>
 
-                      <a href="{% url 'requestblood' donor.id %}">    
+                      <a href="{% url 'requestblood' blood.id %}">    
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
                       </a>
                        {% else %} 
