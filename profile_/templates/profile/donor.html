@@ -7,8 +7,14 @@ Donor's
 
 {% block body %}
 
-
-{% for donor in donor  %}
+<div class="flex justify-center">
+  <form class="form-inline my-2 my-lg-8" action = "{% url 'search' %}" method = "post">
+    {% csrf_token %}
+    <input style="width: 20vw; border: 1px solid #4CAF50; padding: 8px; border-radius: 2px;" type="search" name = "searched" placeholder="Enter Blood group or Location" aria-label="Search" />
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
+{% for donor in donors  %}
 <section class="vh-40" style="background-color: rgb(241 245 249);">
   <div class="container py-3 h-15">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -68,7 +74,6 @@ Donor's
                        {% endif %} 
                   </div>
                 </div>
-              
             </div>
           </div>
         </div>
@@ -76,7 +81,30 @@ Donor's
     </div>
   </div>
 </section>
+{% empty %}
+<div class=" flex justify-center">
+
+<strong>No Data Available</strong>
+</div>
 {% endfor %}
+
+<div class="pagination flex justify-center">
+  <span class="step-links flex items-center space-x-4">
+      {% if page_obj.has_previous %}
+          <a href="?page=1"> &laquo;&laquo; </a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;&raquo;</a>
+      {% endif %}
+  </span>
+</div>
 
   <hr>
   <hr>

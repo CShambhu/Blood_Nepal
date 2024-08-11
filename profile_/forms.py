@@ -31,17 +31,11 @@ class SignUp_Form(forms.ModelForm):
     #     # Make the full_name field read-only
     #     self.fields['full_name'].widget.attrs['readonly'] = True
         
-
-        
-
-
 #Patients SignUp Form
 class PatientsForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = ('full_name','hospital','patients_department','patients_gender','patients_phone','patients_blood_group','blood_pint','required_date','requisition_form')
-    
-
         widgets = {
             'full_name':forms.TextInput(attrs={'class': 'form-control'}),
             'hospital':forms.TextInput(attrs= {'class':'form-control','placeholder':"Hospital name and location"}),

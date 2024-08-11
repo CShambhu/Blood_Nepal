@@ -1,12 +1,12 @@
-
 {% extends 'profile/base.html' %}
 
-
 {% block hero %}
-  <h2>Are you sure you want to delete your account?</h2>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, delete my account</button>
-    <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
-  </form>
+  <div class="flex flex-col items-center justify-center text-center">
+    <h2>Are you sure you want to delete your account?</h2>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, delete my account</button>
+      <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
 {% endblock %}

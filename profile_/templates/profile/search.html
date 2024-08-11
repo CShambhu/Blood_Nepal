@@ -9,33 +9,38 @@
 <!-- Hero Section -->
 
 {% block body %}
-
+<div class="flex justify-center">
+  <form class="form-inline my-2 my-lg-8" action = "{% url 'search' %}" method = "post">
+    {% csrf_token %}
+    <input style="width: 20vw; border: 1px solid #4CAF50; padding: 8px; border-radius: 2px;" type="search" name = "searched" placeholder="Enter Blood group or Location" aria-label="Search" />
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
 {% if blood_search or location_search %}
 
 {% for blood in blood_search %}
 
 <section class="vh-40" style="background-color: rgb(241 245 249);">
-  <div class="container py-5 h-15">
+  <div class="container py-3 h-15">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-lg-6 mb-4 mb-lg-0">
         <div class="card mb-3" style="border-radius: .5rem;">
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white"
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img src={{blood.profile_photo.url}}
+              <img src={{ blood.profile_photo.url }}
                 alt="" class="img-fluid my-4" style="width: 300px;" />
-                <p>{{donor.full_name}}</p>
-
+                <p><strong>{{blood.full_name}}</strong></p>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
-                <h6>Username: {{blood.user}}</h6>
+                <h6><i>Username:</i> {{blood.user}}</h6>
                 <hr class="mt-0 mb-4">
                 <div class="row pt-1">
-                <div class="col-6 mb-3">
-                  <h6>Full Name</h6>
-                  <p class="text-muted">{{blood.full_name}}</p>
-                </div>
+                   <div class="col-6 mb-3">
+                    <h6>Full Name</h6>
+                    <p class="text-muted">{{blood.full_name}}</p>
+                  </div> 
                   <div class="col-6 mb-3">
                     <h6>Gender</h6>
                     <p class="text-muted">{{blood.gender}}</p>
@@ -52,12 +57,28 @@
                     <h6>Location</h6>
                     <p class="text-muted">{{blood.location}}</p>
                   </div>
+                  <div class="col-6 mb-3">
+                    <h6>Last donated</h6>
+                    <p class="text-muted">{{blood.last_donation}}</p>
+                  </div>  
+                  <div class="col-10 mb-3">
+                    
+                      {% if donor.ready_to_donate == 'yes' %} <br>
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
+                      <label for="yes">   Is available for blood donation  !! </label>
+
+                      <a href="{% url 'requestblood' donor.id %}">    
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
+                      </a>
+                       {% else %} 
+                      {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red; "> {% endcomment %}
+                      
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;"> 
+                      <label for="no">   Is NOT available for blood donation  !! </label>
+                      
+                       {% endif %} 
+                  </div>
                 </div>
-                <a href="{% url 'requestblood' blood.id %}"> 
-                  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood 
-                  </button>
-              </a>
-              </div>
             </div>
           </div>
         </div>
@@ -67,23 +88,27 @@
 </section>
 {% endfor %}
 {% for blood in location_search %}
-<section class="vh-40" style="background-color: #f4f5f7;">
-  <div class="container py-5 h-15">
+<section class="vh-40" style="background-color: rgb(241 245 249);">
+  <div class="container py-3 h-15">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-lg-6 mb-4 mb-lg-0">
         <div class="card mb-3" style="border-radius: .5rem;">
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white"
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img src={{blood.profile_photo.url}}
-                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-              <h5>{{blood.full_name}}</h5>
+              <img src={{ blood.profile_photo.url }}
+                alt="" class="img-fluid my-4" style="width: 300px;" />
+                <p><strong>{{blood.full_name}}</strong></p>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
-                <h6>Username: {{blood.user}}</h6>
+                <h6><i>Username:</i> {{blood.user}}</h6>
                 <hr class="mt-0 mb-4">
                 <div class="row pt-1">
+                   <div class="col-6 mb-3">
+                    <h6>Full Name</h6>
+                    <p class="text-muted">{{blood.full_name}}</p>
+                  </div> 
                   <div class="col-6 mb-3">
                     <h6>Gender</h6>
                     <p class="text-muted">{{blood.gender}}</p>
@@ -100,11 +125,23 @@
                     <h6>Location</h6>
                     <p class="text-muted">{{blood.location}}</p>
                   </div>
+                  <div class="col-6 mb-3">
+                    <h6>Last donated</h6>
+                    <p class="text-muted">{{blood.last_donation}}</p>
+                  </div>  
+                  <div class="col-10 mb-3">
+                      {% if donor.ready_to_donate == 'Yes' %} <br>
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
+                      <label for="yes">   Is available for blood donation  !! </label>
+                      <a href="{% url 'requestblood' donor.id %}">    
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
+                      </a>
+                       {% else %} 
+                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;"> 
+                      <label for="no">   Is NOT available for blood donation  !! </label>
+                       {% endif %} 
+                  </div>
                 </div>
-                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded btn-md">
-                  Request Blood
-                </button>
-              </div>
             </div>
           </div>
         </div>

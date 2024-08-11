@@ -1,5 +1,5 @@
-{% extends 'profile/base.html' %}
-
+{% extends 'profile/base.html' %} 
+{% load static %}
 
 {% block title %}
   Blog
@@ -7,10 +7,7 @@
 
 {% block body %}
 
-
-
-
- <div class="container text-justify px-5 py-4 mx-auto">
+  <div class="container text-justify px-5 py-4 mx-auto">
   <a href="{% url 'write_blog' %}">
     <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
         Write Blog

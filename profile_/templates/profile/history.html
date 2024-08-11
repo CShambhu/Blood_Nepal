@@ -1,0 +1,14 @@
+{% extends 'profile/base.html' %}
+
+
+
+{% block tilte %}
+  History
+{% endblock %}
+
+{% block hero %}
+  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+    <strong>You have sent blood request to.. </strong>
+    username : {{signup_donor}}
+  </div>
+{% endblock %}

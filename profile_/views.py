@@ -1,3 +1,4 @@
+
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
 # from django import forms
 from .forms import SignUp_Form, PatientsForm
@@ -8,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from django.views.generic.list import ListView
 
 # Create your views here.
 #Searching on basis of location/blood_group
@@ -28,12 +29,34 @@ def search(request):
     
 
 # Donors Profile
-@login_required
-def donors_profile(request):
-    username = request.user.username
-    donor = SignUp.objects.all()
-    return render(request, "profile/donor.html", {'donor': donor, 'username': username})
+# @login_required
+# def donors_profile(request):
+#     username = request.user.username
+#     donor = SignUp.objects.all()
+#     return render(request, "profile/donor.html", {'donor': donor, 'username': username})
 
+
+# Donors Profile
+# @login_required
+class Profile_list(ListView):
+    # username = request.user.username
+    model = SignUp
+    template_name = 'profile/donor.html'
+    context_object_name = 'donors'
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        # Get the default context
+        context = super().get_context_data(**kwargs)
+        
+        # Add extra context
+        context['username'] = self.request.user.username
+        
+        return context
+
+        
+
+    
 def home(request):
     return render(request, "profile/home.html")
 
@@ -67,12 +90,12 @@ def update_profile(request, id):
 
 def delete_profile(request, id):
     username = request.user.username # Gets the username of user who is logged in from User table
-    signup_user = SignUp.objects.get(id=id)
+    signup_user = get_object_or_404(SignUp, id=id)
     if request.method == 'POST':
         signup_user.delete()
         messages.info(request,( 'Your account has been deleted successfully.'))
         return redirect('home')
-    return render(request, 'profile/profile.html',{'username':username})
+    return render(request, 'profile/delete_profile.html', {'username':username, 'signup_user':signup_user})
 
 #User's Signup Form
 def save_Signup(request):
@@ -181,21 +204,23 @@ def request_blood(request,id):
             if P_Form.is_valid():
                 full_name = P_Form.cleaned_data['full_name']
                 hospital = P_Form.cleaned_data['hospital']
-                patient_department = P_Form.cleaned_data['patients_department']
+                patients_department = P_Form.cleaned_data['patients_department']
                 patients_phone = P_Form.cleaned_data['patients_phone']
                 patients_blood_group = P_Form.cleaned_data['patients_blood_group']
                 blood_pint = P_Form.cleaned_data['blood_pint']
                 requisition_form = P_Form.cleaned_data['requisition_form']
+                required_date = P_Form.cleaned_data['required_date']
                 am = Patient.objects.create(
                     user = user,
                     signup = signup,
                     full_name = full_name,
                     hospital = hospital,
-                    patients_department = patient_department,
+                    patients_department = patients_department,
                     patients_phone = patients_phone,
                     patients_blood_group = patients_blood_group,
                     blood_pint = blood_pint,
-                    requisition_form = requisition_form
+                    requisition_form = requisition_form,
+                    required_date = required_date
                 )
                 am.save()
                 messages.success(request,(f'You have sent blood request to {signup_donor}.'))
@@ -207,3 +232,9 @@ def request_blood(request,id):
         return redirect('signup')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor,'signup_user':signup_user})
 
+def history(request,id):
+    username = request.user.username # Gets the username of user who is logged in from User table
+    # Get the full data of donor to whom user is requesting 
+    signup_donor = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
+    signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
+    return render(request, "profile/history.html", {'username':username, 'signup_donor':signup_donor, 'signup_user' : signup_user})
