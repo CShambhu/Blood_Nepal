@@ -1,14 +1,88 @@
 {% extends 'profile/base.html' %}
 
-
-
-{% block tilte %}
+{% block title %}
   History
 {% endblock %}
-
+{% comment %} Username -{{ patient.blood_requested_to.user }}<br />
+      Full name -{{ patient.blood_requested_to.full_name }}<br />
+      Blood Group -{{ patient.blood_requested_to.blood_group }}<br /><br><br> {% endcomment %}
 {% block hero %}
-  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
-    <strong>You have sent blood request to.. </strong>
-    username : {{signup_donor}}
-  </div>
+{% for patient in patients %}
+<section class="vh-40" style="background-color: rgb(241 245 249);">
+  <div class="container py-5 h-15">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <a href="{{patient.requisition_form.url}}" target="_blank">
+              <img src={{patient.requisition_form.url}}
+                alt="blood requisition form" class="img-fluid my-3" style="width: 300px;" />
+              </a>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <strong>You have sent blood request to ..</strong>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>User Name</h6>
+                    <p class="text-muted">{{ patient.blood_requested_to.user }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Full Name</h6>
+                    <p class="text-muted">{{ patient.blood_requested_to.full_name }}</p>
+                  </div>
+                  <div class="col-8 mb-3">
+                    <h6>Requested Blood Group</h6>
+                    <p class="text-muted">{{ patient.blood_requested_to.blood_group }}</p>
+                  </div>
+                  <div class="card-body p-4">
+                    <strong>Patient Information</strong>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Patient's Name</h6>
+                    <p class="text-muted">{{ patient.patients_name }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Hospital</h6>
+                    <p class="text-muted">{{ patient.hospital }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Hospital Department</h6>
+                    <p class="text-muted">{{ patient.patients_department }}</p>
+                  </div> 
+                  <div class="col-6 mb-3">
+                    <h6>Phone</h6>
+                    <p class="text-muted">{{ patient.patients_phone }}</p>
+                  </div> 
+                  <div class="col-6 mb-3">
+                    <h6>Gender</h6>
+                    <p class="text-muted">{{ patient.patients_gender}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Blood Group</h6>
+                    <p class="text-muted">{{ patient.patients_blood_group }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Blood Amount</h6>
+                    <p class="text-muted">{{ patient.blood_pint }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Required Date</h6>
+                    <p class="text-muted">{{ patient.required_date }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+{% endfor %}
+{% include "profile/pagination.html" %}
 {% endblock %}

@@ -72,11 +72,13 @@ Profile
                   Update Profile
                 </button>
               </a>
-                <a href="">
+    
+                <a href="{% url 'history'  %}">
                 <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded btn-md">
                   History
                 </button>
               </a>
+              
               <a href="{% url 'delete_profile' signup_user.id %}">
                 <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger btn-rounded btn-md">
                   Delete

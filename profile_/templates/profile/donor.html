@@ -23,9 +23,10 @@ Donor's
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white"
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <a href= "{{ donor.profile_photo.url }}">
               <img src={{ donor.profile_photo.url }}
                 alt="" class="img-fluid my-4" style="width: 300px;" />
-                <p><strong>{{donor.full_name}}</strong></p>
+          </a>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
@@ -87,28 +88,8 @@ Donor's
 <strong>No Data Available</strong>
 </div>
 {% endfor %}
-
-<div class="pagination flex justify-center">
-  <span class="step-links flex items-center space-x-4">
-      {% if page_obj.has_previous %}
-          <a href="?page=1"> &laquo;&laquo; </a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-      {% endif %}
-
-      <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-      </span>
-
-      {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;&raquo;</a>
-      {% endif %}
-  </span>
-</div>
-
-  <hr>
-  <hr>
-  {% endblock body %}
+{% include "profile/pagination.html" %}
+{% endblock body %}
 
 
   {% block hero %}

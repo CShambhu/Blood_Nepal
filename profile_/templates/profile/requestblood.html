@@ -7,58 +7,45 @@
 {% endblock %}
 
 {% block body %}
-  
- <div class=" items-center text-base justify-center">
-  You're sending blood request to:<br /> Username: {{ signup.user }}<br />
-  Full name: {{ signup.full_name }}<br />
-  You're requesting for {{ signup.blood_group }} blood.<div class="flex flex-wrap px-5 py-3 items-center text-base justify-center"> 
+  {% comment %} <div class="flex justify-center">
+    You're sending blood request to:<br />
+    Username: {{ signup.user }}<br />
+    Full name: {{ signup.full_name }}<br />
+    You're requesting for {{ signup.blood_group }} blood.
+  </div>
+  {% endcomment %}
+  <div class="flex justify-center">
+  <strong>Blood Requisition Form</strong>
   </div>
   <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
     <form method="post" enctype="multipart/form-data">
-      <strong>Blood Requisition Form</strong>
-
       {% csrf_token %}
-      {% comment %} {{ P_Form|crispy }} {% endcomment %}
 
-    <div class="row">
-        <div class="col-md-4">
-            {{ P_Form.full_name.label_tag }}
-            {{ P_Form.full_name }}
-        </div>
-        <div class="col-md-4">
-            {{ P_Form.hospital.label_tag }}
-            {{ P_Form.hospital }}
-        </div>
-        <div class="col-md-4">
-            {{ P_Form.patients_department.label_tag }}
-            {{ P_Form.patients_department }}
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-4">
-            {{ P_Form.patients_phone.label_tag }}
-            {{ P_Form.patients_phone }}
-        </div>
-        <div class="col-md-4">
-            {{ P_Form.patients_blood_group.label_tag }}
-            {{ P_Form.patients_blood_group }}
-        </div>
-        <div class="col-md-4">
-            {{ P_Form.blood_pint.label_tag }}
-            {{ P_Form.blood_pint }}
-        </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md-4">
-          {{ P_Form.requisition_form.label_tag }}
-          {{ P_Form.requisition_form }}
+      <div class="row">
+        <div class="col-md-4">{{ P_Form.patients_name.label_tag }}
+          {{ P_Form.patients_name }}</div>
+        <div class="col-md-4">{{ P_Form.hospital.label_tag }}
+          {{ P_Form.hospital }}</div>
+        <div class="col-md-4">{{ P_Form.patients_department.label_tag }}
+          {{ P_Form.patients_department }}</div>
       </div>
-      <div class="col-md-4">
-          {{ P_Form.required_date.label_tag }}
-          {{ P_Form.required_date }}
+      <div class="row mt-3">
+        <div class="col-md-4">{{ P_Form.patients_phone.label_tag }}
+          {{ P_Form.patients_phone }}</div>
+        <div class="col-md-4">{{ P_Form.requisition_form.label_tag }}
+          {{ P_Form.requisition_form }}</div>
+        <div class="col-md-4">{{ P_Form.blood_pint.label_tag }}
+          {{ P_Form.blood_pint }}</div>
       </div>
-  </div><br>
+      <div class="row mt-3">
+        <div class="col-md-4">{{ P_Form.patients_gender.label_tag }}
+          {{ P_Form.patients_gender }}</div>
+        <div class="col-md-4">{{ P_Form.patients_blood_group.label_tag }}
+          {{ P_Form.patients_blood_group }}</div>
+        <div class="col-md-4">{{ P_Form.required_date.label_tag }}
+          {{ P_Form.required_date }}</div>
+      </div><br />
       <button type="submit" class="btn btn-success">submit</button>
     </form>
-</div>
+  </div>
 {% endblock %}

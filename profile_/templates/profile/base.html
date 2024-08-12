@@ -38,7 +38,7 @@
           <a href="{% url 'home' %}" class="mr-5 hover:text-red-700 font-semibold text-xl">Home</a>
           {% comment %} <a href="{% url 'about' %}" class="mr-5 hover:text-red-700 font-semibold text-xl">About</a> {% endcomment %}
           <a href="{% url 'donor' %}" class="mr-5 hover:text-red-700 font-semibold text-xl">Blood Donor's Profile</a>
-          <a href="{% url 'blog' %}" class="mr-5 hover:text-red-700 font-semibold text-xl">Blogs</a>
+           <a href="{% url 'blog' %}" class="mr-5 hover:text-red-700 font-semibold text-xl">Blogs</a> 
         </nav>
         <div>
           {% if user.is_authenticated %}
@@ -69,7 +69,8 @@
     {% endblock %}
 
     {% block hero %}
-
+    {% endblock %}
+    {% block pagination %}
     {% endblock %}
 
     {% block footer %}

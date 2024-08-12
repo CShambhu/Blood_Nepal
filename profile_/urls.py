@@ -1,6 +1,7 @@
 from django.urls import path
 from .import views
-from .views import Profile_list
+from .views import Profile_list, History
+# , Request_Blood, History
 
 urlpatterns = [
     path("", views.Login_User, name="home"),
@@ -10,7 +11,10 @@ urlpatterns = [
     path("login/", views.Login_User, name="login"),
     path("signup", views.save_Signup, name="signup"),
     path("requestblood/<int:id>", views.request_blood, name="requestblood"),
-    path("history/<int:id>", views.history, name="history"),
+    # path('request/<int:pk>/', Request_Blood.as_view(), name='request'),
+
+    path("history", History.as_view(), name="history"),
+    # path("history", views.history, name="history"),
 
     # path("requestblood/<int:id>/", views.users_data, name="requestblood"),
     path('logout', views.Logout_User, name='logout'),

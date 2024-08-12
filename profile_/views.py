@@ -1,5 +1,9 @@
 
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views import View
 # from django import forms
 from .forms import SignUp_Form, PatientsForm
 from .models import SignUp, Patient
@@ -8,8 +12,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin
 
 # Create your views here.
 #Searching on basis of location/blood_group
@@ -23,22 +30,11 @@ def search(request):
         blood_search = SignUp.objects.filter(blood_group__iexact = searched)
         location_search = SignUp.objects.filter(location__contains = searched)
         return render(request, "profile/search.html", {'username':username,'searched':searched, 'blood_search':blood_search, 'location_search':location_search})
-
     else:    
         return render(request, "profile/search.html", {'username':username})
-    
 
 # Donors Profile
-# @login_required
-# def donors_profile(request):
-#     username = request.user.username
-#     donor = SignUp.objects.all()
-#     return render(request, "profile/donor.html", {'donor': donor, 'username': username})
-
-
-# Donors Profile
-# @login_required
-class Profile_list(ListView):
+class Profile_list(LoginRequiredMixin,ListView):
     # username = request.user.username
     model = SignUp
     template_name = 'profile/donor.html'
@@ -48,10 +44,8 @@ class Profile_list(ListView):
     def get_context_data(self, **kwargs):
         # Get the default context
         context = super().get_context_data(**kwargs)
-        
         # Add extra context
         context['username'] = self.request.user.username
-        
         return context
 
         
@@ -193,16 +187,17 @@ def request_blood(request,id):
     username = request.user.username # Gets the username of user who is logged in from User table
     # Get the full data of donor to whom user is requesting 
     signup_donor = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
-    signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
+    # signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
     P_Form = PatientsForm()
     user_profile = SignUp.objects.filter(user=request.user).exists()
     if user_profile:
         if request.method == "POST":
             user = request.user
-            signup = SignUp.objects.get(user=request.user) # gets the signup foreign key of the logged in user
+            blood_requested_by = SignUp.objects.get(user=request.user) # gets the signup foreign key of the logged in user
+            blood_requested_to = SignUp.objects.get(id=id)
             P_Form = PatientsForm(request.POST,request.FILES)
             if P_Form.is_valid():
-                full_name = P_Form.cleaned_data['full_name']
+                patients_name = P_Form.cleaned_data['patients_name']
                 hospital = P_Form.cleaned_data['hospital']
                 patients_department = P_Form.cleaned_data['patients_department']
                 patients_phone = P_Form.cleaned_data['patients_phone']
@@ -212,8 +207,9 @@ def request_blood(request,id):
                 required_date = P_Form.cleaned_data['required_date']
                 am = Patient.objects.create(
                     user = user,
-                    signup = signup,
-                    full_name = full_name,
+                    blood_requested_by = blood_requested_by,
+                    blood_requested_to = blood_requested_to,
+                    patients_name = patients_name,
                     hospital = hospital,
                     patients_department = patients_department,
                     patients_phone = patients_phone,
@@ -224,17 +220,47 @@ def request_blood(request,id):
                 )
                 am.save()
                 messages.success(request,(f'You have sent blood request to {signup_donor}.'))
-                return redirect( "home")    
+                return redirect( "profile")  
             else:
-                P_Form = PatientsForm()
+                # Add this to debug form errors
+                print(P_Form.errors)
+                messages.error(request, 'There was an error in the form. Please correct it and try again.')  
+        else:
+            P_Form = PatientsForm()
     else:
         messages.success(request,('Please complete your profile to request blood.'))
         return redirect('signup')
-    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor,'signup_user':signup_user})
+    return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
 
-def history(request,id):
-    username = request.user.username # Gets the username of user who is logged in from User table
-    # Get the full data of donor to whom user is requesting 
-    signup_donor = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
-    signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
-    return render(request, "profile/history.html", {'username':username, 'signup_donor':signup_donor, 'signup_user' : signup_user})
+
+# def history(request):
+#     username = request.user.username
+#     try:
+#         sign_up = SignUp.objects.get(user=request.user)
+#     except SignUp.DoesNotExist:
+#         sign_up = None
+
+#     if sign_up:
+#         # Filter patients based on the logged-in user’s SignUp instance
+#         patients = Patient.objects.filter(blood_requested_by=sign_up)
+#     else:
+#         patients = Patient.objects.none()
+#     return render(request, 'profile/history.html',{'username':username,'patients':patients})
+
+class History(ListView):
+    context_object_name = 'patients'
+    template_name = "profile/history.html"
+    paginate_by = 2
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            sign_up = SignUp.objects.get(user=user)
+            return Patient.objects.filter(blood_requested_by=sign_up)
+
+        except SignUp.DoesNotExist:
+            messages.success(self.request, 'You have not requested for blood yet.')
+    
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['username'] = self.request.user.username
+        return context
