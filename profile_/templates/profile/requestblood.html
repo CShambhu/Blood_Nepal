@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  Request Blood
+  Request Blood | Blood Nepal
 {% endblock %}
 
 {% block body %}
@@ -14,38 +14,59 @@
     You're requesting for {{ signup.blood_group }} blood.
   </div>
   {% endcomment %}
+  
   <div class="flex justify-center">
-  <strong>Blood Requisition Form</strong>
+    <strong>Blood Requisition Form</strong>
   </div>
-  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
+ 
+  {% comment %} <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center"></div> {% endcomment %}
+  <form method="post" enctype="multipart/form-data" class="max-w-4xl mx-auto p-6 border border-gray-300 rounded-lg shadow-md space-y-6">
+    {% csrf_token %}
 
-      <div class="row">
-        <div class="col-md-4">{{ P_Form.patients_name.label_tag }}
-          {{ P_Form.patients_name }}</div>
-        <div class="col-md-4">{{ P_Form.hospital.label_tag }}
-          {{ P_Form.hospital }}</div>
-        <div class="col-md-4">{{ P_Form.patients_department.label_tag }}
-          {{ P_Form.patients_department }}</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="flex flex-col">
+        <label for="patients_name" class="text-sm font-medium text-gray-700">{{ P_Form.patients_name.label_tag }}</label>
+        {{ P_Form.patients_name }}
       </div>
-      <div class="row mt-3">
-        <div class="col-md-4">{{ P_Form.patients_phone.label_tag }}
-          {{ P_Form.patients_phone }}</div>
-        <div class="col-md-4">{{ P_Form.requisition_form.label_tag }}
-          {{ P_Form.requisition_form }}</div>
-        <div class="col-md-4">{{ P_Form.blood_pint.label_tag }}
-          {{ P_Form.blood_pint }}</div>
+      <div class="flex flex-col">
+        <label for="hospital" class="text-sm font-medium text-gray-700">{{ P_Form.hospital.label_tag }}</label>
+        {{ P_Form.hospital }}
       </div>
-      <div class="row mt-3">
-        <div class="col-md-4">{{ P_Form.patients_gender.label_tag }}
-          {{ P_Form.patients_gender }}</div>
-        <div class="col-md-4">{{ P_Form.patients_blood_group.label_tag }}
-          {{ P_Form.patients_blood_group }}</div>
-        <div class="col-md-4">{{ P_Form.required_date.label_tag }}
-          {{ P_Form.required_date }}</div>
-      </div><br />
-      <button type="submit" class="btn btn-success">submit</button>
-    </form>
-  </div>
+      <div class="flex flex-col">
+        <label for="patients_department" class="text-sm font-medium text-gray-700">{{ P_Form.patients_department.label_tag }}</label>
+        {{ P_Form.patients_department }}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="flex flex-col">
+        <label for="patients_phone" class="text-sm font-medium text-gray-700">{{ P_Form.patients_phone.label_tag }}</label>
+        {{ P_Form.patients_phone }}
+      </div>
+      <div class="flex flex-col">
+        <label for="requisition_form" class="text-sm font-medium text-gray-700">{{ P_Form.requisition_form.label_tag }}</label>
+        {{ P_Form.requisition_form }}
+      </div>
+      <div class="flex flex-col">
+        <label for="blood_pint" class="text-sm font-medium text-gray-700">{{ P_Form.blood_pint.label_tag }}</label>
+        {{ P_Form.blood_pint }}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="flex flex-col">
+        <label for="patients_gender" class="text-sm font-medium text-gray-700">{{ P_Form.patients_gender.label_tag }}</label>
+        {{ P_Form.patients_gender }}
+      </div>
+      <div class="flex flex-col">
+        <label for="patients_blood_group" class="text-sm font-medium text-gray-700">{{ P_Form.patients_blood_group.label_tag }}</label>
+        {{ P_Form.patients_blood_group }}
+      </div>
+      <div class="flex flex-col">
+        <label for="required_date" class="text-sm font-medium text-gray-700">{{ P_Form.required_date.label_tag }}</label>
+        {{ P_Form.required_date }}
+      </div>
+    </div>
+      <button type="submit" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
+  </form>
 {% endblock %}

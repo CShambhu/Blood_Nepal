@@ -1,0 +1,17 @@
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+  Update Blog
+{% endblock %}
+{% block body %}
+
+{% comment %} <div class="mb-5 container"> {% endcomment %}
+
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  {% comment %} <div> {% endcomment %}
+{% endblock %}

@@ -18,8 +18,20 @@
     <div class="container px-5 py-1 mx-auto justify-content-centre">
       {% for blogs in blog_post %}
           <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
-        </li><hr>
-          <a href="{% url 'read_post' blogs.id %}"> Read more </a> 
+        </li>
+          <a href="{% url 'read_post' blogs.id %}"> <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  
+            Read More
+        </button> </a>
+          <a href="{% url 'delete_blog' blogs.id %}">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">  
+              Delete
+          </button>
+          </a> 
+          <a href="{% url 'update_blog' blogs.id %}">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
+              Update
+          </button>
+          </a> 
           <hr>
       {% endfor %}
     </div>

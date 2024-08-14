@@ -25,7 +25,6 @@ class SignUp_Form(forms.ModelForm):
             'last_donation':forms.DateInput(attrs={'class':'form-control','type':'date'}),
             'ready_to_donate': forms.RadioSelect(),
             }
-        
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     # Make the full_name field read-only

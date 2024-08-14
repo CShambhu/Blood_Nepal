@@ -15,10 +15,12 @@ Blog
 </a>
 
 </div>
+<div class="mb-5 container">
+
 <form method="post">
-  <div class="mb-5 container">
     {% csrf_token %}
     {{blog_form|crispy}}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<div>
 {% endblock %}

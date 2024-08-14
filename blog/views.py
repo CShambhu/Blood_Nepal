@@ -1,4 +1,7 @@
+from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.utils import timezone
 from datetime import date
 from blog.models import Blog
@@ -6,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from blog.forms import BlogForm
 from profile_.models import SignUp
+from django.views.generic.edit import DeleteView, UpdateView
 
 
 # Create your views here.
@@ -59,3 +63,29 @@ def blog(request):
     blog_post = Blog.objects.all()
     context = {'username':username,'blog_post':blog_post}
     return render(request, "blog/blog.html", context)
+
+
+class Delete_Blog(DeleteView):
+    model = Blog
+    template_name = "blog/delete_blog.html"
+    success_url = reverse_lazy('blog')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        return context
+
+class Update_Blog(Delete_Blog, UpdateView):
+    template_name = "blog/update_blog.html"
+    model = Blog
+    form_class = BlogForm
+    success_url = reverse_lazy('blog')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        return context

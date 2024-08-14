@@ -1,11 +1,8 @@
 {% extends 'profile/base.html' %}
 
 {% block title %}
-  History
+  History | Blood Nepal
 {% endblock %}
-{% comment %} Username -{{ patient.blood_requested_to.user }}<br />
-      Full name -{{ patient.blood_requested_to.full_name }}<br />
-      Blood Group -{{ patient.blood_requested_to.blood_group }}<br /><br><br> {% endcomment %}
 {% block hero %}
 {% for patient in patients %}
 <section class="vh-40" style="background-color: rgb(241 245 249);">
@@ -34,7 +31,7 @@
                     <h6>Full Name</h6>
                     <p class="text-muted">{{ patient.blood_requested_to.full_name }}</p>
                   </div>
-                  <div class="col-8 mb-3">
+                  <div class="col-8 mb-1">
                     <h6>Requested Blood Group</h6>
                     <p class="text-muted">{{ patient.blood_requested_to.blood_group }}</p>
                   </div>

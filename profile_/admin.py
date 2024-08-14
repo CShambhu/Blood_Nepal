@@ -7,7 +7,7 @@ class signupAdmin(admin.ModelAdmin):
     list_display = ["id","full_name","user","email","location","blood_group"]
 
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ["id","patients_name","hospital","patients_blood_group","required_date"]
+    list_display = ["id","blood_requested_by","blood_requested_to","patients_name","hospital","patients_blood_group","required_date"]
 
 
 admin.site.register(SignUp,signupAdmin)

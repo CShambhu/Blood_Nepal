@@ -1,43 +1,14 @@
 {% extends 'profile/base.html' %}
 
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}  
 {% block title %}
-Update_Profile
-{% endblock title %}
+Update Profile | Blood Nepal
+{% endblock title %} 
+
 
 {% block body %}
-<!-- # profile of User who is logged in -->
-
-  <div class="grid-container flex justify-content-center display: grid">
-    <div class='grid-item'>
-      <strong>Update Profile</strong>
+    <div class="flex justify-center">
+      <strong>Update</strong>
     </div>
-  </div>
-  <hr>
-  <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
-  {% comment %} {{ form.full_name.label_tag }}
-        {{form.full_name}}
-        {{ form.full_name.errors }}
-         <div class="form-group">
-        {{ form.gender.label_tag }}
-        {{ form.gender}}
-        {{ form.gender.errors }}
-      </div> 
-       <div class="form-group">
-      {{ form.blood_group.label_tag }}       
-        {{ form.blood_group }}
-         {{ form.blood_group.errors }}
-      </div>     {% endcomment %}
-      <form method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p}}
-        <br>
-        <input type="submit" value='Update' class="btn btn-success">
-    </form>
-    
-  </div>
-  {% endblock %}
-
-
-  {% block hero %}
-  {% endblock %}
+    {% include 'profile/partial_signup.html'%}
+{% endblock %}

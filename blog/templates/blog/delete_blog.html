@@ -1,0 +1,18 @@
+
+{% extends 'profile/base.html' %}
+
+
+{% block title %}
+  Delete Blog
+{% endblock %}
+{% block body %}
+<div class="flex flex-col items-center justify-center text-center">
+
+    <h2>Do you want to delete {{blog.title}} ?</h2>
+        <form method = "post">
+        {% csrf_token %}
+        <button type='submit' class="btn btn-danger">Yes, Delete blog</button>
+        <a href="{% url 'blog' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

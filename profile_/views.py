@@ -1,13 +1,10 @@
-
-from typing import Any
 from django.db.models.query import QuerySet
+from django.http import HttpRequest
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-# from django import forms
 from .forms import SignUp_Form, PatientsForm
 from .models import SignUp, Patient
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -16,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, UpdateView , DeleteView
 
 # Create your views here.
 #Searching on basis of location/blood_group
@@ -30,7 +27,8 @@ def search(request):
         blood_search = SignUp.objects.filter(blood_group__iexact = searched)
         location_search = SignUp.objects.filter(location__contains = searched)
         return render(request, "profile/search.html", {'username':username,'searched':searched, 'blood_search':blood_search, 'location_search':location_search})
-    else:    
+    else: 
+        searched = request.POST["searched"]   
         return render(request, "profile/search.html", {'username':username})
 
 # Donors Profile
@@ -47,8 +45,6 @@ class Profile_list(LoginRequiredMixin,ListView):
         # Add extra context
         context['username'] = self.request.user.username
         return context
-
-        
 
     
 def home(request):
@@ -72,24 +68,54 @@ def profile(request):
         return redirect('signup')
     
     
+class Update_Profile(UpdateView):
+    model = SignUp
+    template_name = 'profile/update_profile.html'
+    form_class = SignUp_Form
+    success_url = reverse_lazy('profile')
 
-def update_profile(request, id):
-    username = request.user.username # Gets the username of user who is logged in from User table
-    signup_user = SignUp.objects.get(id=id)
-    form = SignUp_Form(request.POST or None , request.FILES or None, instance = signup_user) 
-    if form.is_valid():
-        form.save()
-        return redirect('profile') 
-    return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user': signup_user})
+    def get_object(self, queryset=None):
+        # Get the object to be updated
+        obj = super().get_object(queryset)
+        return obj
 
-def delete_profile(request, id):
-    username = request.user.username # Gets the username of user who is logged in from User table
-    signup_user = get_object_or_404(SignUp, id=id)
-    if request.method == 'POST':
-        signup_user.delete()
-        messages.info(request,( 'Your account has been deleted successfully.'))
-        return redirect('home')
-    return render(request, 'profile/delete_profile.html', {'username':username, 'signup_user':signup_user})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.user.username
+        return context
+
+
+# def update_profile(request, id):
+#     username = request.user.username # Gets the username of user who is logged in from User table
+#     signup_user = SignUp.objects.get(id=id)
+#     form = SignUp_Form(request.POST or None , request.FILES or None, instance = signup_user) 
+#     if form.is_valid():
+#         form.save()
+#         return redirect('profile') 
+#     return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user': signup_user})
+
+class Delete_Profile(DeleteView):
+    template_name = "profile/delete_profile.html"
+    model = SignUp
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        messages.info(request,"Your account has been deleted successfully")
+        return super().post(request, *args, **kwargs)
+
+# def delete_profile(request, id):
+#     username = request.user.username # Gets the username of user who is logged in from User table
+#     signup_user = get_object_or_404(SignUp, id=id)
+#     if request.method == 'POST':
+#         signup_user.delete()
+#         messages.info(request,( 'Your account has been deleted successfully.'))
+#         return redirect('home')
+#     return render(request, 'profile/delete_profile.html', {'username':username, 'signup_user':signup_user})
 
 #User's Signup Form
 def save_Signup(request):
@@ -232,21 +258,6 @@ def request_blood(request,id):
         return redirect('signup')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
 
-
-# def history(request):
-#     username = request.user.username
-#     try:
-#         sign_up = SignUp.objects.get(user=request.user)
-#     except SignUp.DoesNotExist:
-#         sign_up = None
-
-#     if sign_up:
-#         # Filter patients based on the logged-in user’s SignUp instance
-#         patients = Patient.objects.filter(blood_requested_by=sign_up)
-#     else:
-#         patients = Patient.objects.none()
-#     return render(request, 'profile/history.html',{'username':username,'patients':patients})
-
 class History(ListView):
     context_object_name = 'patients'
     template_name = "profile/history.html"
@@ -256,7 +267,6 @@ class History(ListView):
         try:
             sign_up = SignUp.objects.get(user=user)
             return Patient.objects.filter(blood_requested_by=sign_up)
-
         except SignUp.DoesNotExist:
             messages.success(self.request, 'You have not requested for blood yet.')
     
