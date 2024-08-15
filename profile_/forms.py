@@ -17,13 +17,13 @@ class SignUp_Form(forms.ModelForm):
             'full_name':forms.TextInput(attrs={'class': 'form-control'}),
             'email':forms.EmailInput(attrs= {'class':'form-control','placeholder':"example@gmail.com"}),
             'phone':forms.TextInput(attrs={"class":"form-control",'maxlength': '10'}),
-            'gender':forms.RadioSelect(),
+            'gender':forms.Select(),
             'weight':forms.NumberInput(attrs={'class':'form-control'}),
             'profile_photo':forms.ClearableFileInput(attrs={'class':'form-control'}),
-            'location':forms.TextInput(attrs= {'class':'form-control','placeholder':"district,placename(kathmandu,baneshwor)"}),
+            'location':forms.TextInput(attrs= {'class':'form-control','placeholder':"district,placename"}),
             'blood_group':forms.Select(),
             'last_donation':forms.DateInput(attrs={'class':'form-control','type':'date'}),
-            'ready_to_donate': forms.RadioSelect(),
+            'ready_to_donate': forms.Select(),
             }
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)

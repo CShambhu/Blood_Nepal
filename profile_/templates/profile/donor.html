@@ -15,66 +15,60 @@ Donor's | Blood Nepal
   </form>
 </div>
 {% for donor in donors  %}
-<section class="vh-40" style="background-color: rgb(241 245 249);">
-  <div class="container py-3 h-15">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-6 mb-4 mb-lg-0">
-        <div class="card mb-3" style="border-radius: .5rem;">
-          <div class="row g-0">
-            <div class="col-md-4 gradient-custom text-center text-white"
-              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <a href= "{{ donor.profile_photo.url }}">
-              <img src={{ donor.profile_photo.url }}
-                alt="" class="img-fluid my-4" style="width: 300px;" />
-          </a>
+<section class="bg-gray-100 py-1">
+  <div class="container mx-auto py-1">
+    <div class="flex justify-center items-center">
+      <div class="w-full lg:w-1/2 mb-2 lg:mb-0">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div class="flex">
+            <!-- Profile Image Section -->
+            <div class="w-1/3 bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center p-4">
+              <a href="{{donor.profile_photo.url}}">
+                <img src="{{donor.profile_photo.url}}" alt="Profile Photo" class="w-72 h-auto rounded-lg">
+              </a>
             </div>
-            <div class="col-md-8">
-              <div class="card-body p-4">
-                <h6><i>Username:</i> {{donor.user}}</h6>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                   <div class="col-6 mb-3">
-                    <h6>Full Name</h6>
-                    <p class="text-muted">{{donor.full_name}}</p>
-                  </div> 
-                  <div class="col-6 mb-3">
-                    <h6>Gender</h6>
-                    <p class="text-muted">{{donor.gender}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Blood Group</h6>
-                    <p class="text-muted">{{donor.blood_group}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Weight</h6>
-                    <p class="text-muted">{{donor.weight}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Location</h6>
-                    <p class="text-muted">{{donor.location}}</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Last donated</h6>
-                    <p class="text-muted">{{donor.last_donation}}</p>
-                  </div>  
-                  <div class="col-10 mb-3">
-                    
-                      {% if donor.ready_to_donate == 'yes' %} <br>
-                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: green; " >
-                      <label for="yes">   Is available for blood donation  !! </label>
-
-                      <a href="{% url 'requestblood' donor.id %}">    
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
-                      </a>
-                       {% else %} 
-                      {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red; "> {% endcomment %}
-                      
-                      <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;"> 
-                      <label for="no">   Is NOT available for blood donation  !! </label>
-                      
-                       {% endif %} 
-                  </div>
+            <!-- Profile Details Section -->
+            <div class="w-2/3 p-3">
+              <h6 class="text-xl font-semibold mb-2">Username: {{donor.user}}</h6>
+              <hr class="my-4 border-gray-300">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div class="mb-3">
+                  <h6 class="font-medium">Full Name</h6>
+                  <p class="text-gray-600">{{donor.full_name}}</p>
                 </div>
+                <div class="mb-3">
+                  <h6 class="font-medium">Gender</h6>
+                  <p class="text-gray-600">{{donor.gender}}</p>
+                </div>
+                <div class="mb-3">
+                  <h6 class="font-medium">Blood Group</h6>
+                  <p class="text-gray-600">{{donor.blood_group}}</p>
+                </div>
+                <div class="mb-3">
+                  <h6 class="font-medium">Weight</h6>
+                  <p class="text-gray-600">{{donor.weight}}</p>
+                </div>
+                <div class="mb-3">
+                  <h6 class="font-medium">Location</h6>
+                  <p class="text-gray-600">{{donor.location}}</p>
+                </div>
+                <div class="mb-3">
+                  <h6 class="font-medium">Last Donated</h6>
+                  <p class="text-gray-600">{{donor.last_donation}}</p>
+                </div>
+                <div class="mb-3">
+                  {% if donor.ready_to_donate == 'yes' %} <br>
+                  {% comment %} <input type="radio" checked > {% endcomment %}
+                  <label for="yes">   Is available for blood donation  !! </label>
+
+                  <a href="{% url 'requestblood' donor.id %}">    
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
+                  </a>
+                   {% else %} 
+                  {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;">  {% endcomment %}
+                  <label for="no">   Is NOT available for blood donation  !! </label>
+                   {% endif %} 
+               </div>  
             </div>
           </div>
         </div>
@@ -84,7 +78,6 @@ Donor's | Blood Nepal
 </section>
 {% empty %}
 <div class=" flex justify-center">
-
 <strong>No Data Available</strong>
 </div>
 {% endfor %}

@@ -102,8 +102,8 @@ Profile | Blood Nepal
 </div>
 </section> {% endcomment %}
 
-<section class="bg-gray-100 py-12">
-  <div class="container mx-auto py-5">
+<section class="bg-gray-100 py-2">
+  <div class="container mx-auto py-4">
     <div class="flex justify-center items-center">
       <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -152,34 +152,34 @@ Profile | Blood Nepal
                   <p class="text-gray-600">{{signup_user.last_donation}}</p>
                 </div>
                 <div class="mb-3">
-                  <h6 class="font-medium">Ready to Donate?</h6>
+                  <h6 class="font-medium">Ready to Donate?</h6> 
                   <div class="flex items-center">
-                    <input type="radio" id="yes" name="ready_to_donate" {% if signup_user.ready_to_donate == 'yes' %}checked{% endif %}>
-                    <label for="yes" class="ml-2 mr-4">Yes</label>
-                    <input type="radio" id="no" name="ready_to_donate" {% if signup_user.ready_to_donate == 'no' %}checked{% endif %}>
-                    <label for="no" class="ml-2">No</label>
+                    <input type="radio" id="yes" name="ready_to_donate" {% if signup_user.ready_to_donate == 'yes' %}checked{% endif %}> 
+                    <label for="yes" class="ml-2 mr-4">Always ready </label>
+                    <input type="radio" id="no" name="ready_to_donate" {% if signup_user.ready_to_donate == 'no' %}checked{% endif %}> 
+                    <label for="no" class="ml-2">Not Ready</label>
                   </div>
                 </div>
               </div>
               <div class="mt-4 flex space-x-1">
                 <a href="{% url 'update_profile' signup_user.id %}" class="inline-block">
-                  <button type="button" class="px-1 py-1 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <button type="button" class="btn btn-outline-info my-2 my-sm-0">
                     Update Profile
                   </button>
                 </a>
                 <a href="{% url 'history' %}" class="inline-block">
-                  <button type="button" class="px-3 py-1 bg-gray-500 text-white font-semibold rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <button type="button" class="btn btn-outline-secondary my-2 my-sm-0">
                     Sent
                   </button>
                 </a>
                 <a href="{% url 'profile' %}" class="inline-block">
-                  <button type="button" class="px-3 py-1 bg-green-700 text-white font-semibold rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <button type="button" class="btn btn-outline-success my-2 my-sm-0">
                     Received
                   </button>
                 </a>
                 <a href="{% url 'delete_profile' signup_user.id %}" class="inline-block">
-                  <button type="button" class="px-3 py-1 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
-                    Delete
+                  <button type="button" class="btn btn-outline-danger my-2 my-sm-0">
+                    Delete {% comment %} class="px-3 py-1 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500" {% endcomment %}
                   </button>
                 </a>
               </div>

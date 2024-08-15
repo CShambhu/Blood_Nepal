@@ -34,7 +34,7 @@ class SignUp(models.Model):
     location = models.CharField(max_length=40)
     blood_group = models.CharField(choices=Blood_Group_Choices,max_length=3)
     weight = models.IntegerField( null=True, blank=False)
-    ready_to_donate = models.CharField(choices=R_CHOICES ,null=True, max_length=4, default='yes')
+    ready_to_donate = models.CharField(choices=R_CHOICES ,null=True, max_length=4)
     last_donation = models.DateField(null=True)
     
     def __str__(self):

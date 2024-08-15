@@ -21,7 +21,7 @@ from django.views.generic.edit import FormMixin, UpdateView , DeleteView
 def search(request):
     username = request.user.username
     if request.method == "POST":
-        searched = request.POST["searched"]
+        searched = request.POST.get("searched","")
         # pattern = r'^(a|A|b|B|o|O|ab|AB)(\+|-)$'
         # blood_search = SignUp.objects.filter(blood_group__regex = pattern)
         blood_search = SignUp.objects.filter(blood_group__iexact = searched)
@@ -178,9 +178,7 @@ def Login_User(request):
                 
                 except SignUp.DoesNotExist:
                     messages.success(request,("Your data is incomplete. Please visit your profile."))
-                    return redirect('home')
-                
-                 
+                    return redirect('home')  
             else:
                 messages.error(request, "Incorrect Username and Password")
                 return redirect('home') 
@@ -255,7 +253,7 @@ def request_blood(request,id):
             P_Form = PatientsForm()
     else:
         messages.success(request,('Please complete your profile to request blood.'))
-        return redirect('signup')
+        return redirect('donor')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
 
 class History(ListView):
