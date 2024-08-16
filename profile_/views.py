@@ -256,15 +256,15 @@ def request_blood(request,id):
         return redirect('donor')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
 
-class History(ListView):
+class Sent(ListView):
     context_object_name = 'patients'
-    template_name = "profile/history.html"
+    template_name = "profile/sent.html"
     paginate_by = 2
     def get_queryset(self):
         user = self.request.user
         try:
             sign_up = SignUp.objects.get(user=user)
-            return Patient.objects.filter(blood_requested_by=sign_up)
+            return Patient.objects.filter(blood_request_sent_by=sign_up)
         except SignUp.DoesNotExist:
             messages.success(self.request, 'You have not requested for blood yet.')
     

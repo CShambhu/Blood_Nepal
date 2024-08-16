@@ -102,8 +102,8 @@ Profile | Blood Nepal
 </div>
 </section> {% endcomment %}
 
-<section class="bg-gray-100 py-2">
-  <div class="container mx-auto py-4">
+<section class="bg-gray-300 py-2">
+  <div class="container mx-auto py-3">
     <div class="flex justify-center items-center">
       <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -115,43 +115,43 @@ Profile | Blood Nepal
               </a>
             </div>
             <!-- Profile Details Section -->
-            <div class="w-2/3 p-4">
-              <h6 class="text-xl font-semibold mb-2">Username: {{signup_user.user}}</h6>
-              <hr class="my-4 border-gray-300">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="mb-3">
+            <div class="w-2/3 p-1">
+              <h6 class="text-xl font-semibold mb-1">Username: {{signup_user.user}}</h6>
+              <hr class="my-2 border-gray-300">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
+                <div class="mb-1">
                   <h6 class="font-medium">Full Name</h6>
                   <p class="text-gray-600">{{signup_user.full_name}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Email</h6>
                   <p class="text-gray-600">{{signup_user.email}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Phone</h6>
                   <p class="text-gray-600">{{signup_user.phone}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Gender</h6>
                   <p class="text-gray-600">{{signup_user.gender}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Blood Group</h6>
                   <p class="text-gray-600">{{signup_user.blood_group}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Weight</h6>
                   <p class="text-gray-600">{{signup_user.weight}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Location</h6>
                   <p class="text-gray-600">{{signup_user.location}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Last Donated</h6>
                   <p class="text-gray-600">{{signup_user.last_donation}}</p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                   <h6 class="font-medium">Ready to Donate?</h6> 
                   <div class="flex items-center">
                     <input type="radio" id="yes" name="ready_to_donate" {% if signup_user.ready_to_donate == 'yes' %}checked{% endif %}> 
@@ -161,13 +161,13 @@ Profile | Blood Nepal
                   </div>
                 </div>
               </div>
-              <div class="mt-4 flex space-x-1">
+              <div class="mt-2 flex space-x-1">
                 <a href="{% url 'update_profile' signup_user.id %}" class="inline-block">
                   <button type="button" class="btn btn-outline-info my-2 my-sm-0">
                     Update Profile
                   </button>
                 </a>
-                <a href="{% url 'history' %}" class="inline-block">
+                <a href="{% url 'sent' %}" class="inline-block">
                   <button type="button" class="btn btn-outline-secondary my-2 my-sm-0">
                     Sent
                   </button>
@@ -190,8 +190,6 @@ Profile | Blood Nepal
     </div>
   </div>
 </section>
-
-
 {% endblock %}
 
 

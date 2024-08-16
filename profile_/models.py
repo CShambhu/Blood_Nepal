@@ -43,8 +43,8 @@ class SignUp(models.Model):
 #Patients SignUp Form
 class Patient(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE,null= True)
-    blood_requested_by = models.ForeignKey(SignUp,related_name='requested', on_delete=models.SET_NULL, null=True, blank=True)
-    blood_requested_to = models.ForeignKey(SignUp,related_name='sent', on_delete=models.SET_NULL, null=True, blank=False)
+    blood_request_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
+    blood_request_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=False)
     patients_name = models.CharField(max_length = 20)
     hospital = models.CharField(max_length = 20, null=True)
     patients_department = models.CharField(max_length = 120)
