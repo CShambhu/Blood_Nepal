@@ -1,9 +1,11 @@
-{% extends 'profile/base.html' %}
+{% extends "profile/base.html" %}
 
 {% block title %}
-  History | Blood Nepal
+Blood Request Received | Blood Nepal
 {% endblock %}
+
 {% block hero %}
+
 {% for patient in patients %}
 <section class="vh-40 bg-gray-300">
   <div class="container py-3 h-15">
@@ -20,20 +22,20 @@
             <!-- Profile Details Section -->
             <div class="col-md-8">
               <div class="card-body p-2">
-                <strong>You have sent blood request | {{current_date}}</strong>
+                <strong>You have received blood request | {{current_date}}</strong>
                 <hr class="mt-0 mb-1">
                 <div class="row pt-1">
                   <div class="col-6 mb-1">
                     <h6>User Name</h6>
-                    <p class="text-muted">{{ patient.blood_request_sent_to.user }}</p>
+                    <p class="text-muted">{{ patient.blood_request_sent_by.user }}</p>
                   </div>
                   <div class="col-6 mb-1">
                     <h6>Full Name</h6>
-                    <p class="text-muted">{{ patient.blood_request_sent_to.full_name }}</p>
+                    <p class="text-muted">{{ patient.blood_request_sent_by.full_name }}</p>
                   </div>
                   <div class="col-8 mb-1">
                     <h6>Requested Blood Group</h6>
-                    <p class="text-muted">{{ patient.blood_request_sent_to.blood_group }}</p>
+                    <p class="text-muted">{{ patient.blood_request_sent_by.blood_group }}</p>
                   </div>
                   <!--Patient Information-->
                   <div class="card-body p-2">
@@ -79,10 +81,11 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </section>
 {% endfor %}
 
 {% include "profile/pagination.html" %}
 
 {% endblock %}
+

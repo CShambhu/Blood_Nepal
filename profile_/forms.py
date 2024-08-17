@@ -39,28 +39,10 @@ class PatientsForm(forms.ModelForm):
             'patients_name':forms.TextInput(attrs={'class': 'form-control'}),
             'hospital':forms.TextInput(attrs= {'class':'form-control','placeholder':"Hospital name and location"}),
             'patients_department':forms.TextInput(attrs={'class':'form-control'}),
-            'patients_gender':forms.RadioSelect(),
-            'patients_phone':forms.NumberInput(attrs={"class":"form-control",'maxlength': '10'}),
+            'patients_gender':forms.Select(),
+            'patients_phone':forms.TextInput(attrs={"class":"form-control",'maxlength': '10'}),
             'patients_blood_group':forms.Select(),
             'blood_pint':forms.NumberInput(attrs={'class':'form-control'}),
             'required_date':forms.DateInput(attrs={'class':'form-control','type':'date'}),
             'requisition_form':forms.ClearableFileInput(attrs={'class':'form-control','placeholder':"Your Photo"}),
         }
-
-# class RequestSentForm(forms.ModelForm):
-#     class Meta:
-#         Model = SignUp
-#         fields = ('full_name','phone','gender','weight','profile_photo','location','blood_group','last_donation','ready_to_donate')
-        
-#         widgets = {
-#             'full_name':forms.TextInput(attrs={'class': 'form-control'}),
-#             'email':forms.EmailInput(attrs= {'class':'form-control','placeholder':"example@gmail.com"}),
-#             'phone':forms.TextInput(attrs={"class":"form-control",'maxlength': '10'}),
-#             'gender':forms.RadioSelect(),
-#             'weight':forms.NumberInput(attrs={'class':'form-control'}),
-#             'profile_photo':forms.ClearableFileInput(attrs={'class':'form-control'}),
-#             'location':forms.TextInput(attrs= {'class':'form-control','placeholder':"district,placename(kathmandu,baneshwor)"}),
-#             'blood_group':forms.Select(),
-#             'last_donation':forms.DateInput(attrs={'class':'form-control','type':'date'}),
-#             'ready_to_donate': forms.RadioSelect(),
-#             }

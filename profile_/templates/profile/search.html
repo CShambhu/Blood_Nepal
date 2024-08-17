@@ -9,156 +9,33 @@
 <!-- Hero Section -->
 
 {% block body %}
-<div class="flex justify-center">
-  <form class="form-inline my-2 my-lg-8" action = "{% url 'search' %}" method = "post">
-    {% csrf_token %}
-    <input style="width: 20vw; border: 1px solid #4CAF50; padding: 8px; border-radius: 2px;" type="search" name = "searched" placeholder="Enter Blood group or Location" aria-label="Search" />
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</div>
-{% if blood_search or location_search %}
+  <div class="flex justify-center">
+    <form class="form-inline my-2 my-lg-8" action="{% url 'search' %}" method="post">
+      {% csrf_token %}
+      <input style="width: 20vw; border: 1px solid #4CAF50; padding: 8px; border-radius: 2px;" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+  {% if blood_search or location_search %}
+    <!-- searching by blood group -->
+    {% for donor in blood_search %}
+      {% include 'profile/partial_donor.html' %}
+    {% endfor %}
 
-{% for blood in blood_search %}
-
-<section class="bg-gray-100 py-1">
-  <div class="container mx-auto py-1">
-    <div class="flex justify-center items-center">
-      <div class="w-full lg:w-1/2 mb-2 lg:mb-0">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="flex">
-            <!-- Profile Image Section -->
-            <div class="w-1/3 bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center p-4">
-              <a href="{{blood.profile_photo.url}}">
-                <img src="{{blood.profile_photo.url}}" alt="Profile Photo" class="w-72 h-auto rounded-lg">
-              </a>
-            </div>
-            <!-- Profile Details Section -->
-            <div class="w-2/3 p-3">
-              <h6 class="text-xl font-semibold mb-2">Username: {{blood.user}}</h6>
-              <hr class="my-4 border-gray-300">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div class="mb-3">
-                  <h6 class="font-medium">Full Name</h6>
-                  <p class="text-gray-600">{{blood.full_name}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Gender</h6>
-                  <p class="text-gray-600">{{blood.gender}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Blood Group</h6>
-                  <p class="text-gray-600">{{blood.blood_group}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Weight</h6>
-                  <p class="text-gray-600">{{blood.weight}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Location</h6>
-                  <p class="text-gray-600">{{blood.location}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Last Donated</h6>
-                  <p class="text-gray-600">{{blood.last_donation}}</p>
-                </div>
-                <div class="mb-3">
-                  {% if blood.ready_to_donate == 'yes' %} <br>
-                  {% comment %} <input type="radio" checked > {% endcomment %}
-                  <label for="yes">   Is available for blood donation  !! </label>
-
-                  <a href="{% url 'requestblood' blood.id %}">    
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
-                  </a>
-                   {% else %} 
-                  {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;">  {% endcomment %}
-                  <label for="no">   Is NOT available for blood donation  !! </label>
-                   {% endif %} 
-               </div>  
-            </div>
-          </div>
-        </div>
+    <!-- searching by location -->
+    {% for donor in location_search %}
+      {% include 'profile/partial_donor.html' %}
+    {% endfor %}
+  {% else %}
+    <div class="flex flex-col items-center justify-center text-center">
+      <div class="alert alert-warning alert-dismissible fade show col-md-3" role="alert">
+        <strong>Data not available</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
-  </div>
-</section>
-{% endfor %}
+  {% endif %}
 
-<!-- searching by location -->
-{% for blood in location_search %}
-
-<section class="bg-gray-100 py-1">
-  <div class="container mx-auto py-1">
-    <div class="flex justify-center items-center">
-      <div class="w-full lg:w-1/2 mb-2 lg:mb-0">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="flex">
-            <!-- Profile Image Section -->
-            <div class="w-1/3 bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center p-4">
-              <a href="{{blood.profile_photo.url}}">
-                <img src="{{blood.profile_photo.url}}" alt="Profile Photo" class="w-72 h-auto rounded-lg">
-              </a>
-            </div>
-            <!-- Profile Details Section -->
-            <div class="w-2/3 p-3">
-              <h6 class="text-xl font-semibold mb-2">Username: {{blood.user}}</h6>
-              <hr class="my-4 border-gray-300">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div class="mb-3">
-                  <h6 class="font-medium">Full Name</h6>
-                  <p class="text-gray-600">{{blood.full_name}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Gender</h6>
-                  <p class="text-gray-600">{{blood.gender}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Blood Group</h6>
-                  <p class="text-gray-600">{{blood.blood_group}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Weight</h6>
-                  <p class="text-gray-600">{{blood.weight}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Location</h6>
-                  <p class="text-gray-600">{{blood.location}}</p>
-                </div>
-                <div class="mb-3">
-                  <h6 class="font-medium">Last Donated</h6>
-                  <p class="text-gray-600">{{blood.last_donation}}</p>
-                </div>
-                <div class="mb-3">
-                  {% if blood.ready_to_donate == 'yes' %} <br>
-                  {% comment %} <input type="radio" checked > {% endcomment %}
-                  <label for="yes">   Is available for blood donation  !! </label>
-
-                  <a href="{% url 'requestblood' blood.id %}">    
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  Request Blood </button> 
-                  </a>
-                   {% else %} 
-                  {% comment %} <input type="radio" checked style="appearance: none; width: 14px; height: 14px; border-radius: 50%;  background-color: red;">  {% endcomment %}
-                  <label for="no">   Is NOT available for blood donation  !! </label>
-                   {% endif %} 
-               </div>  
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{% endfor %}
-
-{% else %}
-<div class="flex flex-col items-center justify-center text-center">
-
-<div class="alert alert-warning alert-dismissible fade show col-md-3" role="alert">
-  <strong>Data not available</strong> 
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-</div>
-{% endif %}
-{% include 'profile/pagination.html' %}
+  {% include 'profile/pagination.html' %}
 {% endblock %}
 
 {% block loginbar %}

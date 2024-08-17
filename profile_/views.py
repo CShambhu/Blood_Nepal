@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView , DeleteView
+from datetime import date
+from django.utils import timezone
 
 # Create your views here.
 #Searching on basis of location/blood_group
@@ -108,6 +110,13 @@ class Delete_Profile(DeleteView):
         messages.info(request,"Your account has been deleted successfully")
         return super().post(request, *args, **kwargs)
 
+#Logout User
+def Logout_User(request):
+    logout(request)
+    messages.error(request, ("You are logged out"))
+    return redirect('home') 
+
+
 # def delete_profile(request, id):
 #     username = request.user.username # Gets the username of user who is logged in from User table
 #     signup_user = get_object_or_404(SignUp, id=id)
@@ -152,7 +161,7 @@ def save_Signup(request):
 
             )
             em.save()
-            messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
+            # messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
             return redirect('profile')
         else:
             form = SignUp_Form()
@@ -199,11 +208,6 @@ def register_user(request):
         form = UserCreationForm()      
     return render(request, 'profile/register.html', {'form': form})
 
-#Logout User
-def Logout_User(request):
-    logout(request)
-    messages.error(request, ("You are logged out"))
-    return redirect('home') 
 
 #Patient's Blood Request Form
 @login_required
@@ -217,8 +221,8 @@ def request_blood(request,id):
     if user_profile:
         if request.method == "POST":
             user = request.user
-            blood_requested_by = SignUp.objects.get(user=request.user) # gets the signup foreign key of the logged in user
-            blood_requested_to = SignUp.objects.get(id=id)
+            blood_request_sent_by = SignUp.objects.get(user=request.user) # gets the signup foreign key of the logged in user
+            blood_request_sent_to = SignUp.objects.get(id=id)
             P_Form = PatientsForm(request.POST,request.FILES)
             if P_Form.is_valid():
                 patients_name = P_Form.cleaned_data['patients_name']
@@ -229,22 +233,30 @@ def request_blood(request,id):
                 blood_pint = P_Form.cleaned_data['blood_pint']
                 requisition_form = P_Form.cleaned_data['requisition_form']
                 required_date = P_Form.cleaned_data['required_date']
-                am = Patient.objects.create(
-                    user = user,
-                    blood_requested_by = blood_requested_by,
-                    blood_requested_to = blood_requested_to,
-                    patients_name = patients_name,
-                    hospital = hospital,
-                    patients_department = patients_department,
-                    patients_phone = patients_phone,
-                    patients_blood_group = patients_blood_group,
-                    blood_pint = blood_pint,
-                    requisition_form = requisition_form,
-                    required_date = required_date
-                )
-                am.save()
-                messages.success(request,(f'You have sent blood request to {signup_donor}.'))
-                return redirect( "profile")  
+                today = date.today()
+                if blood_request_sent_to.blood_group == patients_blood_group:
+                    if required_date >= today:
+                        am = Patient.objects.create(
+                                user = user,
+                                blood_request_sent_by = blood_request_sent_by,
+                                blood_request_sent_to = blood_request_sent_to,
+                                patients_name = patients_name,
+                                hospital = hospital,
+                                patients_department = patients_department,
+                                patients_phone = patients_phone,
+                                patients_blood_group = patients_blood_group,
+                                blood_pint = blood_pint,
+                                requisition_form = requisition_form,
+                                required_date = required_date,
+                            )
+                        am.save()
+                        messages.success(request,(f'You have sent blood request to {signup_donor}.'))
+                        return redirect( "profile")
+                    else:
+                        messages.error(request, "Ooops ! Looks like you have entered past dates")  
+                else:
+                    messages.error(request, "Blood group does not match with the donor's.")  
+
             else:
                 # Add this to debug form errors
                 print(P_Form.errors)
@@ -271,4 +283,17 @@ class Sent(ListView):
     def get_context_data(self):
         context = super().get_context_data()
         context['username'] = self.request.user.username
+        context['current_date'] = timezone.now().date()
         return context
+
+class Received(Sent):
+    template_name = "profile/received.html"
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            sign_up = SignUp.objects.get(user=user)
+            return Patient.objects.filter(blood_request_sent_to=sign_up)
+        except SignUp.DoesNotExist:
+            messages.success(self.request, 'You have not received any blood request yet.')
+    
+    
