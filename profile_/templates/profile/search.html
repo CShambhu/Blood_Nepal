@@ -6,9 +6,10 @@
   Search | Blood Nepal
 {% endblock %}
 
-<!-- Hero Section -->
+<!-- SEARCHING -->
 
 {% block body %}
+<div class=" bg-gray-300 flex justify-center">
   <div class="flex justify-center">
     <form class="form-inline my-2 my-lg-8" action="{% url 'search' %}" method="post">
       {% csrf_token %}
@@ -16,6 +17,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
+</div>
   {% if blood_search or location_search %}
     <!-- searching by blood group -->
     {% for donor in blood_search %}
@@ -36,6 +38,7 @@
   {% endif %}
 
   {% include 'profile/pagination.html' %}
+  
 {% endblock %}
 
 {% block loginbar %}

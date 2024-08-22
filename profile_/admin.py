@@ -10,8 +10,5 @@ class PatientAdmin(admin.ModelAdmin):
     list_display = ["id","blood_request_sent_by","blood_request_sent_to","patients_name","hospital","patients_blood_group","required_date"]
 
 
-# admin.site.register(SignUp,signupAdmin)
-# admin.site.register(Patient,PatientAdmin)
-
 
 

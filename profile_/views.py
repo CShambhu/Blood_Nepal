@@ -17,7 +17,6 @@ from django.views.generic.edit import FormMixin, UpdateView , DeleteView
 from datetime import date
 from django.utils import timezone
 
-# Create your views here.
 #Searching on basis of location/blood_group
 @login_required
 def search(request):
@@ -52,10 +51,6 @@ class Profile_list(LoginRequiredMixin,ListView):
 def home(request):
     return render(request, "profile/home.html")
 
-def about(request):
-    username = request.user.username # Gets the username of user who is logged in from User table
-    context = {'username':username}
-    return render(request, "profile/about.html",context)
 
 #profile of User who is logged in
 @login_required
@@ -86,16 +81,6 @@ class Update_Profile(UpdateView):
         context['username'] = self.request.user.username
         return context
 
-
-# def update_profile(request, id):
-#     username = request.user.username # Gets the username of user who is logged in from User table
-#     signup_user = SignUp.objects.get(id=id)
-#     form = SignUp_Form(request.POST or None , request.FILES or None, instance = signup_user) 
-#     if form.is_valid():
-#         form.save()
-#         return redirect('profile') 
-#     return render(request, 'profile/update_profile.html', {'username':username, 'form':form, 'signup_user': signup_user})
-
 class Delete_Profile(DeleteView):
     template_name = "profile/delete_profile.html"
     model = SignUp
@@ -115,16 +100,6 @@ def Logout_User(request):
     logout(request)
     messages.error(request, ("You are logged out"))
     return redirect('home') 
-
-
-# def delete_profile(request, id):
-#     username = request.user.username # Gets the username of user who is logged in from User table
-#     signup_user = get_object_or_404(SignUp, id=id)
-#     if request.method == 'POST':
-#         signup_user.delete()
-#         messages.info(request,( 'Your account has been deleted successfully.'))
-#         return redirect('home')
-#     return render(request, 'profile/delete_profile.html', {'username':username, 'signup_user':signup_user})
 
 #User's Signup Form
 def save_Signup(request):
