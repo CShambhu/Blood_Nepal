@@ -5,7 +5,7 @@ from .views import Profile_list, Sent, Update_Profile, Delete_Profile, Received
 
 urlpatterns = [
     path("", views.Login_User, name="home"),
-    path("about", views.about, name="about"),
+    # path("about", views.about, name="about"),
     path("profile", views.profile, name="profile"),
     # path("update-profile", views.update_profile, name="update-profile"),
     path("login/", views.Login_User, name="login"),

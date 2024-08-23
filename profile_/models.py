@@ -23,7 +23,7 @@ Blood_Group_Choices = [
         ]
 
 class SignUp(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.OneToOneField(User, on_delete = models.CASCADE , unique=True)
     full_name = models.CharField(max_length = 120, null=False, blank=False )
     email = models.EmailField( null=False, blank=False)
     phone = models.IntegerField(null=True)
