@@ -1,0 +1,15 @@
+{% extends 'profile/delete_profile.html' %}
+
+{% block title %}
+Delete Blood Request | Blood Nepal
+{% endblock %}
+
+{% block delete %}
+    <h2>Are you sure you want to delete request?</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 mt-3 md:grid-cols-2 gap-3">
+        <div class="flex flex-col">
+          <button type="submit" class="btn btn-danger">Yes, delete it.</button>
+        </div>
+{%endblock %}

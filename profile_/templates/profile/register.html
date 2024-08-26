@@ -8,15 +8,77 @@ Register | Blood Nepal
 {% endblock %}
 
 {% block hero %}
-<div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
+
+{% comment %} <div class="flex flex-wrap px-5 py-3 items-center text-base justify-center">
   <form action="" method="post">
     {% csrf_token %}
     {{form.as_p}}
-    
-    <input type="submit" value="submit" class = "btn btn-primary">
+  <button type="submit" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>    
   </form>
 </div>
 
 </form>
-</div>
-{% endblock %} 
+</div> {% endcomment %}
+
+
+<!-- templates/registration/register.html -->
+
+
+  <div class="py-4 flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-2 text-gray-800">Register</h2>
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        <div>
+          <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
+          <input id="id_username" name="username" type="text" 
+                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                 placeholder="Username">
+          {% if form.username.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.username.errors }}</p>
+          {% endif %}
+        </div>
+
+        {% comment %} <div>
+          <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input id="id_email" name="email" type="email" value="{{ form.email.value }}" 
+                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                 placeholder="Email address">
+          {% if form.email.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.email.errors }}</p>
+          {% endif %}
+        </div> {% endcomment %}
+
+        <div>
+          <label for="id_password1" class="block text-sm font-medium text-gray-700">Password</label>
+          <input id="id_password1" name="password1" type="password" 
+                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                 placeholder="Password">
+          {% if form.password1.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.password1.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div>
+          <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input id="id_password2" name="password2" type="password" 
+                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                 placeholder="Confirm Password">
+          {% if form.password2.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.password2.errors }}</p>
+          {% endif %}
+        </div>
+
+        <div class="flex items-center justify-between">
+          <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+

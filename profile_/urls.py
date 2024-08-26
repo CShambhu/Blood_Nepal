@@ -1,6 +1,6 @@
 from django.urls import path
 from .import views
-from .views import Profile_list, Sent, Update_Profile, Delete_Profile, Received
+from .views import Profile_list, Sent, Update_Profile, Delete_Profile, Received, Delete_Blood_Request
 # , Request_Blood, History
 
 urlpatterns = [
@@ -15,6 +15,8 @@ urlpatterns = [
 
     path("request-sent", Sent.as_view(), name="request-sent"),
     path("request-received", Received.as_view(), name="request-received"),
+    path("delete-blood-request/<int:pk>/", Delete_Blood_Request.as_view(), name="delete-blood-request"),
+
 
     # path("history", views.history, name="history"),
 

@@ -270,5 +270,19 @@ class Received(Sent):
             return Patient.objects.filter(blood_request_sent_to=sign_up)
         except SignUp.DoesNotExist:
             messages.success(self.request, 'You have not received any blood request yet.')
+
+
+class Delete_Blood_Request(DeleteView):
+    template_name = "profile/delete_blood_request.html"
+    model = Patient
+    success_url = reverse_lazy('request-received')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        return context
     
+    def post(self, request, *args, **kwargs):
+        messages.info(request,"You deleted a request.")
+        return super().post(request, *args, **kwargs)
     

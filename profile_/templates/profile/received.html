@@ -75,6 +75,12 @@ Blood Request Received | Blood Nepal
                     <p class="text-muted">{{ patient.required_date }}</p>
                   </div>
                 </div>
+                <a href = "">
+                <button class="btn btn-info"> Accept </button>
+                </a>
+                <a href = "{% url 'delete-blood-request' patient.id %}">
+                <button class="btn btn-danger">Delete </button>
+                </a>
               </div>
             </div>
           </div>
