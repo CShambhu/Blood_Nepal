@@ -26,7 +26,7 @@ class SignUp(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE , unique=True)
     full_name = models.CharField(max_length = 120, null=False, blank=False )
     email = models.EmailField( null=False, blank=False)
-    phone = models.IntegerField(null=True)
+    phone = models.CharField(max_length=10,null=True)
     gender = models.CharField(max_length=6, choices= GenderChoices , default='Male')
     profile_photo = models.ImageField(upload_to = 'images/')
     location = models.CharField(max_length=40)
@@ -43,16 +43,26 @@ class Patient(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE,null= True)
     blood_request_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
     blood_request_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=False)
+    message = models.TextField(max_length = 50, null=True)
     patients_name = models.CharField(max_length = 20)
     hospital = models.CharField(max_length = 20, null=True)
     patients_department = models.CharField(max_length = 120)
     patients_gender = models.CharField(max_length=6, choices= GenderChoices, null=True, default='Male')
-    patients_phone = models.IntegerField( null=True,blank=True)
+    patients_phone = models.CharField(max_length=10, null=True,blank=True)
     patients_blood_group = models.CharField(choices=Blood_Group_Choices,max_length=3,null= True)
     blood_pint = models.IntegerField(null=True)
     required_date = models.DateField(null=True)
     requisition_form = models.ImageField(upload_to = 'patientsForm/')
+
     
     def __str__(self):
         return self.patients_name
+    
+class Message(models.Model):
+    reply_message = models.TextField(max_length = 50, null=True)
+    message_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
+    message_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=True)
+    
+    def __str__(self):
+        return self.reply_message 
     

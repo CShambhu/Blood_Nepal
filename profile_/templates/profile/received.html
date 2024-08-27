@@ -33,9 +33,13 @@ Blood Request Received | Blood Nepal
                     <h6>Full Name</h6>
                     <p class="text-muted">{{ patient.blood_request_sent_by.full_name }}</p>
                   </div>
-                  <div class="col-8 mb-1">
-                    <h6>Requested Blood Group</h6>
+                  <div class="col-6 mb-1">
+                    <h6>Requested Blood</h6>
                     <p class="text-muted">{{ patient.blood_request_sent_by.blood_group }}</p>
+                  </div>
+                  <div class="col-6 mb-1">
+                    <h6>message</h6>
+                    <p class="text-muted"><strong>{{ patient.message }}</strong></p>
                   </div>
                   <!--Patient Information-->
                   <div class="card-body p-2">
@@ -75,9 +79,11 @@ Blood Request Received | Blood Nepal
                     <p class="text-muted">{{ patient.required_date }}</p>
                   </div>
                 </div>
-                <a href = "">
-                <button class="btn btn-info"> Accept </button>
-                </a>
+                
+                <a href = "msg">
+                  <button class="btn btn-info">Accept </button>
+                  </a>
+
                 <a href = "{% url 'delete-blood-request' patient.id %}">
                 <button class="btn btn-danger">Delete </button>
                 </a>

@@ -35,6 +35,7 @@
                     <h6>Requested Blood Group</h6>
                     <p class="text-muted">{{ patient.blood_request_sent_to.blood_group }}</p>
                   </div>
+                  
                   <!--Patient Information-->
                   <div class="card-body p-2">
                     <strong>Patient Information</strong>
@@ -72,6 +73,12 @@
                     <h6>Required Date</h6>
                     <p class="text-muted">{{ patient.required_date }}</p>
                   </div>
+                  {% for msg in Msg %}
+                  <div class="flex flex-col">
+                    {% comment %} <label for="reply_message" class="text-sm font-medium text-gray-700"></label> {% endcomment %}
+                    {{ msg.reply_message }}
+                  </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
@@ -82,6 +89,7 @@
 </div>
 </section>
 {% endfor %}
+
 
 {% include "profile/pagination.html" %}
 

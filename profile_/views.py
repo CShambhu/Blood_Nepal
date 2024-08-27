@@ -1,10 +1,11 @@
 from django.db.models.query import QuerySet
+# from django.http import HttpRequest
 from django.http import HttpRequest
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import View
-from .forms import SignUp_Form, PatientsForm
-from .models import SignUp, Patient
+# from django.views import View
+from profile_.forms import SignUp_Form, PatientsForm, MessageForm
+from .models import SignUp, Patient, Message
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -13,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormMixin, UpdateView , DeleteView
+from django.views.generic.edit import FormMixin, UpdateView , DeleteView, FormView
 from datetime import date
 from django.utils import timezone
 
@@ -184,6 +185,8 @@ def register_user(request):
     return render(request, 'profile/register.html', {'form': form})
 
 
+
+
 #Patient's Blood Request Form
 @login_required
 def request_blood(request,id):
@@ -208,6 +211,8 @@ def request_blood(request,id):
                 blood_pint = P_Form.cleaned_data['blood_pint']
                 requisition_form = P_Form.cleaned_data['requisition_form']
                 required_date = P_Form.cleaned_data['required_date']
+                message = P_Form.cleaned_data['message']
+
                 today = date.today()
                 if blood_request_sent_to.blood_group == patients_blood_group:
                     if required_date >= today:
@@ -223,6 +228,8 @@ def request_blood(request,id):
                                 blood_pint = blood_pint,
                                 requisition_form = requisition_form,
                                 required_date = required_date,
+                                message = message,
+                                
                             )
                         am.save()
                         messages.success(request,(f'You have sent blood request to {signup_donor}.'))
@@ -231,7 +238,6 @@ def request_blood(request,id):
                         messages.error(request, "Ooops ! Looks like you have entered past dates")  
                 else:
                     messages.error(request, "Blood group does not match with the donor's.")  
-
             else:
                 # Add this to debug form errors
                 print(P_Form.errors)
@@ -242,6 +248,8 @@ def request_blood(request,id):
         messages.success(request,('Please complete your profile to request blood.'))
         return redirect('donor')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
+
+
 
 class Sent(ListView):
     context_object_name = 'patients'
@@ -260,6 +268,25 @@ class Sent(ListView):
         context['username'] = self.request.user.username
         context['current_date'] = timezone.now().date()
         return context
+
+class Sent(ListView):
+    context_object_name = 'patients'
+    template_name = "profile/sent.html"
+    paginate_by = 2
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            sign_up = SignUp.objects.get(user=user)
+            return Patient.objects.filter(blood_request_sent_by=sign_up)
+        except SignUp.DoesNotExist:
+            messages.success(self.request, 'You have not requested for blood yet.')
+    
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['username'] = self.request.user.username
+        context['current_date'] = timezone.now().date()
+        return context
+
 
 class Received(Sent):
     template_name = "profile/received.html"
@@ -285,4 +312,51 @@ class Delete_Blood_Request(DeleteView):
     def post(self, request, *args, **kwargs):
         messages.info(request,"You deleted a request.")
         return super().post(request, *args, **kwargs)
+
+#to display msg form so requester can send msg to donor in received.html
+class Msg_Form(FormView):
+    template_name = "profile/msg.html"
+    form_class = MessageForm
+    success_url = reverse_lazy('request-received')
+    
+
+    def form_valid(self, form):
+        user = self.request.user
+        message_sent_by = get_object_or_404(SignUp, user=user)
+        message_sent_to = get_object_or_404(SignUp, id=self.kwargs['id'])
+        
+
+        reply_message = form.cleaned_data['reply_message']
+
+        Message.objects.create
+        (
+            user=user,
+            message_sent_by = message_sent_by ,
+            message_sent_to = message_sent_to,
+            reply_message = reply_message
+        )
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        context['signup'] = get_object_or_404(SignUp, id=self.kwargs['id'])
+        return context
+
+#to display msg of donor back to requester sent.html 
+class View_(FormView):
+    template_name = "profile/request-sent.html"
+    get_context_data = 'Msg'
+    model = Message
+    # success_url = reverse_lazy('request-received')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        return context
+    
     

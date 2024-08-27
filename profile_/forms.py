@@ -1,4 +1,4 @@
-from .models import SignUp, Patient
+from .models import SignUp, Patient, Message
 from django import forms
 from django.forms import ValidationError
 
@@ -34,15 +34,24 @@ class SignUp_Form(forms.ModelForm):
 class PatientsForm(forms.ModelForm):
     class Meta:
         model = Patient
-        fields = ('patients_name','hospital','patients_department','patients_gender','patients_phone','patients_blood_group','blood_pint','required_date','requisition_form')
+        fields = ('patients_name','hospital','patients_department','patients_gender','patients_phone','patients_blood_group','blood_pint','required_date','requisition_form','message')
         widgets = {
             'patients_name':forms.TextInput(attrs={'class': 'form-control'}),
             'hospital':forms.TextInput(attrs= {'class':'form-control','placeholder':"Hospital name and location"}),
             'patients_department':forms.TextInput(attrs={'class':'form-control'}),
             'patients_gender':forms.Select(),
-            'patients_phone':forms.TextInput(attrs={"class":"form-control",'maxlength': '10'}),
+            'patients_phone':forms.TextInput(attrs={"class":"form-control"}),
             'patients_blood_group':forms.Select(),
             'blood_pint':forms.NumberInput(attrs={'class':'form-control'}),
             'required_date':forms.DateInput(attrs={'class':'form-control','type':'date'}),
             'requisition_form':forms.ClearableFileInput(attrs={'class':'form-control','placeholder':"Your Photo"}),
+            'message':forms.TextInput(attrs={'class':'form-control','placeholder':"Message to donor. e.g It's urgent | please be available on time | donor required on standby. "}),
+        }
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('id','reply_message')
+        widgets = {
+            'reply_message':forms.TextInput(attrs={'class':'form-control','placeholder':""}),
         }

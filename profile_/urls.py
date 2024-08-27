@@ -1,34 +1,29 @@
 from django.urls import path
-from .import views
-from .views import Profile_list, Sent, Update_Profile, Delete_Profile, Received, Delete_Blood_Request
-# , Request_Blood, History
+from profile_ import views
+from . views import Profile_list, Sent, Update_Profile, Delete_Profile, Received, Delete_Blood_Request, Msg_Form
+
 
 urlpatterns = [
     path("", views.Login_User, name="home"),
-    # path("about", views.about, name="about"),
     path("profile", views.profile, name="profile"),
-    # path("update-profile", views.update_profile, name="update-profile"),
     path("login/", views.Login_User, name="login"),
     path("signup", views.save_Signup, name="signup"),
     path("requestblood/<int:id>", views.request_blood, name="requestblood"),
-    # path('request/<int:pk>/', Request_Blood.as_view(), name='request'),
 
     path("request-sent", Sent.as_view(), name="request-sent"),
     path("request-received", Received.as_view(), name="request-received"),
     path("delete-blood-request/<int:pk>/", Delete_Blood_Request.as_view(), name="delete-blood-request"),
 
 
-    # path("history", views.history, name="history"),
 
-    # path("requestblood/<int:id>/", views.users_data, name="requestblood"),
+    path('msg/', Msg_Form.as_view(), name='msg'),
+
     path('logout', views.Logout_User, name='logout'),
     path('register_user', views.register_user, name='register_user'),
     path('donor', Profile_list.as_view(), name='donor'),
     path('search', views.search, name='search'),
     path('update-profile/<int:pk>/', Update_Profile.as_view(), name='update_profile'),
 
-    # path('update_profile/<int:id>', views.update_profile, name='update_profile'),
-    # path('delete_profile/<int:id>/', views.delete_profile, name='delete_profile'),
     path('delete_profile/<int:pk>/', Delete_Profile.as_view(), name='delete_profile'),
 
 
