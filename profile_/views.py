@@ -99,7 +99,7 @@ class Delete_Profile(DeleteView):
 #Logout User
 def Logout_User(request):
     logout(request)
-    messages.error(request, ("You are logged out"))
+    # messages.error(request, ("You are logged out"))
     return redirect('home') 
 
 #User's Signup Form
@@ -154,7 +154,7 @@ def Login_User(request):
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request, user)
-                messages.success(request, (f" Welcome "+username+"."))
+                # messages.success(request, (f" Welcome "+username+"."))
                 
                 try :
                     signup_user = SignUp.objects.get(user = request.user)

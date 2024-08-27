@@ -38,7 +38,7 @@
         <nav class="hidden md:flex space-x-6">
           <a href="{% url 'home' %}" class="hover:text-red-500 text-xl font-semibold">Home</a>
           <a href="{% url 'donor' %}" class="hover:text-red-500 text-xl font-semibold">Blood Donor's Profile</a>
-          {% comment %} <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">Blogs</a> {% endcomment %}
+          {% comment %} <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">Blogs</a>  {% endcomment %}
         </nav>
         
         <!-- User Actions -->
@@ -60,7 +60,8 @@
         </div>
       </div>
     </header>
-    {% if messages %}
+    {% block display_messages%}
+    {% comment %} {% if messages %}
       {% for message in messages %}
         <div class="flex flex-col items-center justify-center text-center">
           <div class="text-ml alert alert-warning alert-dismissible fade show col-md-3" role="alert">
@@ -69,7 +70,8 @@
           </div>
         </div>
       {% endfor %}
-    {% endif %}
+    {% endif %} {% endcomment %}
+    {% endblock %}
 
     {% block body %}
     {% endblock %}

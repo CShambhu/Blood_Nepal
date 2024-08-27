@@ -62,7 +62,7 @@ def blog(request):
     username = request.user.username # Gets the username of user who is logged in from User table
     blog_post = Blog.objects.all()
     context = {'username':username,'blog_post':blog_post}
-    return render(request, "blog/blog.html", context)
+    return render(request, "profile/home.html", context)
 
 
 class Delete_Blog(DeleteView):

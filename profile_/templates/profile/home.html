@@ -18,12 +18,12 @@
       <!-- Content Section -->
       <div class="w-full md:w-1/2 md:pr-12 mb-10 md:mb-0 pb-10 border-b md:border-b-0 border-gray-200">
         <h1 class="text-2xl md:text-3xl font-medium title-font mb-2 text-gray-900"></h1>
-        <p class="leading-relaxed text-base">
-          <strong>Blood Nepal</strong> aims to connect the donor and receiver directly without any intervention for fresh blood requirements.
-        </p>
+        {% comment %} <p class="leading-relaxed text-base">
+          <strong >WE</strong> aims to connect the donor and receiver directly without any intervention for fresh blood requirements.
+        </p> {% endcomment %}
         <div class="mt-4">
           <div class="card text-center">
-            <div class="card-header text-red-600">Blood Nepal</div>
+            <div class="text-xl md:text-2xl lg:text-3xl card-header text-red-600">Blood Nepal</div>
             <div class="flex justify-center items-center" style="width: 18rem;">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Himal Blood Transfusion Center, phone: 986-2737316</li>
@@ -40,22 +40,78 @@
 
       <!-- Conditional Content Based on Authentication -->
       {% if user.is_authenticated %}
-        <div class="w-full md:w-1/2 md:pl-12">
-          <div class="text-base flex flex-col items-center">
-            <strong>Why should you donate blood?</strong>
-            <p style="text-align:justify">Every 2 seconds, someone needs a blood transfusion in the United States. 
-              A single blood donation can save the lives of up to three people.<br><br>
-
-              Your donation is used during transfusions and procedures that help patients who have lost too much blood. Blood donations can also help people whose bodies can't create a normal amount of blood cells to keep them stable.</p>
+      <div class="w-full md:w-1/2 md:pl-12">
+        <div class="flex flex-col md:flex-row items-start px-4 md:px-12 py-8 mb-6 space-y-4 md:space-y-0 md:space-x-8">
+          <div class="flex-1">
+            <strong class="text-sm md:text-2xl lg:text-3xl text-red-600">
+              WE
+            </strong>
+            <p class="text-base md:text-lg lg:text-xl mt-2">
+              aim to connect the donor and receiver directly without any intervention for fresh blood requirements.
+            </p>
           </div>
-          <br><hr><br>
-          <div class="text-base flex flex-col items-center">
-            <strong>Benefits of Blood Donation</strong>
-            <li>Health Monitoring: Donors receive a basic health check-up, including blood pressure, hemoglobin levels, and pulse, which can help in early detection of potential health issues.</li>
-  <br><li>Reduced Risk of Certain Diseases: Regular donation has been linked to lower risks of conditions such as hemochromatosis (iron overload) and may reduce the risk of heart disease due to reduced iron levels.</li>
-  <br><li>Psychological Satisfaction: Knowing that your donation has the potential to save lives can provide a sense of fulfillment and purpose.</li>
-  <br><li>Community Contribution: Donating blood helps ensure that there is a stable and reliable blood supply available for those in need, strengthening community support systems.</li>
-  <br>
+          <div class="flex flex-col space-y-2">
+            <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">
+              <button class="btn btn-info px-4 py-2 rounded-md text-white hover:bg-blue-600">
+                Read Blogs
+              </button>
+            </a>
+            <a href="{% url 'write_blog' %}" class="hover:text-red-500 text-xl font-semibold">
+              <button class="btn btn-info px-4 py-2 rounded-md text-white hover:bg-blue-600">
+                 Write Blogs 
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+        {% comment %} <div class="w-full md:w-1/2 md:pl-12">
+          <div class='flex justify-start items-start px-12 py-8 mb-6 space-x-4 '>
+            <div class='flex justify-center items-center py-4'>
+              <strong class='text-sm md:text-2xl lg:text-3xl text-red-600'> WE </strong> aim to connect the donor and receiver directly without any intervention for fresh blood requirements.
+              </div>
+            <div><br>
+            <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">
+              <button class='btn btn-info'>Read Blogs</button>
+            </a>
+            <a href="{% url 'write_blog' %}" class="hover:text-red-500 text-xl font-semibold">
+              <button class='btn btn-info'>Wanna Write Blogs ??</button>
+            </a>
+          </div>
+        </div> {% endcomment %}
+          
+          {% comment %} <div class='flex justify items-center px-12 py-8 mb-6'>
+          <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">
+           <button class='btn btn-info'> Read Blogs </button>
+          </a> 
+          <a href="{% url 'write_blog' %}" class="hover:text-red-500 text-xl font-semibold">
+            <button class='btn btn-info'>Wanna Write Blogs ?? </button>
+            </a> 
+          </div> {% endcomment %}
+
+          <div class="text-base flex flex-col items-center">            
+            <section class="text-gray-600 body-font">
+              <div class="container px-5 py-1 mx-auto justify-content-centre">
+                {% for blogs in blog_post %}
+                    <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
+                  </li>
+                    <a href="{% url 'read_post' blogs.id %}"> <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  
+                      Read More
+                  </button> </a>
+                    <a href="{% url 'delete_blog' blogs.id %}">
+                      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">  
+                        Delete
+                    </button>
+                    </a> 
+                    <a href="{% url 'update_blog' blogs.id %}">
+                      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
+                        Update
+                    </button>
+                    </a> 
+                    <hr>
+                {% endfor %}
+              </div>
+            </section>
             </div>
         </div>
       {% else %}
@@ -72,6 +128,7 @@
                   <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
                   <input type="password" id="password" name="password" class="w-full border border-gray-300 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
                 </div>
+                
                 <p class="text-center mb-4">
                   Already have an account? <a href="{% url 'register_user' %}" class="text-green-600 font-medium"><strong>Register</strong></a>
                 </p>
