@@ -44,6 +44,8 @@ class Patient(models.Model):
     blood_request_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
     blood_request_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=False)
     message = models.TextField(max_length = 50, null=True)
+    # message_sent_by = models.ForeignKey(SignUp,related_name='message_by', on_delete=models.SET_NULL, null=True, blank=True)
+    # message_sent_to = models.ForeignKey(SignUp,related_name='message_to', on_delete=models.SET_NULL, null=True, blank=True)
     patients_name = models.CharField(max_length = 20)
     hospital = models.CharField(max_length = 20, null=True)
     patients_department = models.CharField(max_length = 120)
@@ -60,8 +62,8 @@ class Patient(models.Model):
     
 class Message(models.Model):
     reply_message = models.TextField(max_length = 50, null=True)
-    message_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
-    message_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=True)
+    message_sent_by = models.ForeignKey(SignUp,related_name='message_sent_by', on_delete=models.SET_NULL, null=True, blank=True)
+    message_sent_to = models.ForeignKey(SignUp,related_name='message_sent_to', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.reply_message 

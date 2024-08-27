@@ -26,11 +26,11 @@ Message | Blood Nepal
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
           <div class="mb-1">
-            <label for="id_msg" class="text-sm font-medium text-gray-700">
+            {% comment %} <label for="id_msg" class="text-sm font-medium text-gray-700">
                 {{ form.reply_message.label_tag }}
             </label>
             {{ form.reply_message }}
-            {{ form.reply_message.errors }}
+            {{ form.reply_message.errors }} {% endcomment %}
         </div>
         <button type="submit" class="px-3 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
 

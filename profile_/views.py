@@ -321,30 +321,14 @@ class Msg_Form(FormView):
     
 
     def form_valid(self, form):
-        user = self.request.user
-        message_sent_by = get_object_or_404(SignUp, user=user)
-        message_sent_to = get_object_or_404(SignUp, id=self.kwargs['id'])
-        
-
-        reply_message = form.cleaned_data['reply_message']
-
-        Message.objects.create
-        (
-            user=user,
-            message_sent_by = message_sent_by ,
-            message_sent_to = message_sent_to,
-            reply_message = reply_message
-        )
+        form.save()
         return super().form_valid(form)
     
-    def form_invalid(self, form):
-        print(form.errors)
-        return super().form_invalid(form)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["username"] = self.request.user.username
-        context['signup'] = get_object_or_404(SignUp, id=self.kwargs['id'])
         return context
 
 #to display msg of donor back to requester sent.html 
