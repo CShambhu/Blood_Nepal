@@ -23,5 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("profile_.urls")),
     path('blog/', include("blog.urls")),
+    path('blood-banks/', include("blood_banks.urls")),
+
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

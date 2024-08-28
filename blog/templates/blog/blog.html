@@ -6,25 +6,64 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container text-justify px-5 py-4 mx-auto">
-    <a href="{% url 'home' %}"><button class="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500" type="submit">Back</button></a>
-    {% comment %} <a href="{% url 'write_blog' %}"><button class="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500" type="submit">Write Blog</button></a> {% endcomment %}
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100 px-2 py-4">
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-3xl w-full">
+      <!-- Back Button -->
+      <a href="{% url 'home' %}"><button class="bg-gray-400 text-white py-2 px-4 rounded " type="submit">Back</button></a>
+
+
+      <!-- Profile and Blog Posts Section -->
+      <section class="p-2">
+          <!-- Include message from another template -->
+          <div class="mb-4">
+              {% include 'profile/display_message.html' %}
+          </div>
+
+          <!-- Blog Posts List -->
+          <ul class="space-y-2">
+              {% for blogs in blog_post %}
+                  <li class="border border-gray-300 rounded-lg p-4 bg-white shadow-sm">
+                      <div class="text-gray-700 mb-2">
+                          <p>Author: {{ blogs.user }} | Title: {{ blogs.title }} | Date: {{ blogs.created_at|date:"F j, Y" }}</p>
+                      </div>
+                      <div class="flex space-x-2">
+                          <a href="{% url 'read_post' blogs.id %}">
+                              <button class="bg-teal-500 text-white py-1 px-3 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500">Read More</button>
+                          </a>
+                          <a href="{% url 'delete_blog' blogs.id %}">
+                              <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Delete</button>
+                          </a>
+                          <a href="{% url 'update_blog' blogs.id %}">
+                              <button class="bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">Update</button>
+                          </a>
+                      </div>
+                  </li>
+              {% endfor %}
+          </ul>
+      </section>
   </div>
+</div>
+
+
+
+  {% comment %} <div class="container text-justify px-5 py-4 mx-auto">
+    <a href="{% url 'home' %}"><button class="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500" type="submit">Back</button></a>
   <section class="text-gray-600 body-font">
     <div class="flex justify-center">
       {% include 'profile/display_message.html' %}
       </div>
-
     <div class="container px-5 py-1 mx-auto justify-content-centre">
       {% for blogs in blog_post %}
         <li>
-          <em>Author: {{ blogs.user }} | Title: {{ blogs.title }} | Date: {{ blogs.date }}</em>
+          <em>Author: {{ blogs.user }} | Title: {{ blogs.title }} | Date: {{ blogs.created_at|date:"F j, Y" }}</em>
         </li>
         <a href="{% url 'read_post' blogs.id %}"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Read More</button></a>
         <a href="{% url 'delete_blog' blogs.id %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
         <a href="{% url 'update_blog' blogs.id %}"><button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Update</button></a>
-        <hr />
       {% endfor %}
     </div>
   </section>
+</div> {% endcomment %}
+
 {% endblock %}

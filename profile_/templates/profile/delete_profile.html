@@ -5,26 +5,24 @@ Delete profile | Blood Nepal
 {% endblock %}
 
 {% block body %}
-<div class="fixed inset-0 bg-gray-800 bg-opacity-40 backdrop-blur-sm flex items-center justify-center">
+<div class="fixed inset-0 bg-gray-800 bg-opacity-45 backdrop-blur-sm flex items-center justify-center">
   <div class="relative bg-white max-w-3xl mx-auto p-6 border border-gray-300 rounded-lg shadow-md space-y-6">
-  
-  <div class="text-gray-800 flex flex-col  items-center justify-center text-center">
-    {% block delete %}
-    <h2>Are you sure you want to delete your account?</h2>
-    <form method="post">
-      {% csrf_token %}
-      <div class="grid grid-cols-1 mt-3 md:grid-cols-2 gap-3">
-        <div class="flex flex-col">
-          <button type="submit" class="btn btn-danger">Yes, delete my account.</button>
+    <div class="text-gray-800 flex flex-col  items-center justify-center text-center">
+      {% block delete %}
+      <h2>Are you sure you want to delete your account?</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 mt-3 md:grid-cols-2 gap-3">
+            <div class="flex flex-col">
+              <button type="submit" class="btn btn-danger">Yes, delete my account.</button>
+            </div>
+            <div class="flex flex-col">
+              <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+          {% endblock %}
         </div>
-        <div class="flex flex-col">
-          <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
-        </div>
-      {% endblock %}
-
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

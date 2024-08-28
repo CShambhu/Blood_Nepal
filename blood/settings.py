@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'profile_.apps.ProfileConfig',
     'blog.apps.BlogConfig',
+    'blood_banks.apps.BloodBanksConfig',
 
     'crispy_forms',
     # 'django-crispy-forms',

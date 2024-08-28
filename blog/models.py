@@ -7,7 +7,7 @@ class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     signup = models.ForeignKey(SignUp, on_delete=models.CASCADE, null= True)
     title = models.CharField('title',max_length=30)
-    date = models.DateField(default=timezone.now,null=True,blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, null= True)
     content = models.TextField()
     def __str__(self):
         return self.title

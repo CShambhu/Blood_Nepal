@@ -1,18 +1,21 @@
 
-{% extends 'profile/base.html' %}
+{% extends 'profile/delete_profile.html' %}
+
 
 
 {% block title %}
   Delete Blog
 {% endblock %}
-{% block body %}
-<div class="flex flex-col items-center justify-center text-center">
 
-    <h2>Do you want to delete {{blog.title}} ?</h2>
-        <form method = "post">
-        {% csrf_token %}
-        <button type='submit' class="btn btn-danger">Yes, Delete blog</button>
-        <a href="{% url 'blog' %}" class="btn btn-secondary">Cancel</a>
-        </form>
-    </div>
-{% endblock %}
+{% block delete %}
+    <h2>Are you sure you want to delete "{{blog.title}}" ?</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 mt-3 md:grid-cols-2 gap-3">
+        <div class="flex flex-col">
+          <button type="submit" class="btn btn-danger">Yes, delete it.</button>
+        </div>
+        <div class="flex flex-col">
+          <a href="{% url 'blog' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+{%endblock %}

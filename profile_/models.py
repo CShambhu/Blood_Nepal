@@ -54,6 +54,7 @@ class Patient(models.Model):
     patients_blood_group = models.CharField(choices=Blood_Group_Choices,max_length=3,null= True)
     blood_pint = models.IntegerField(null=True)
     required_date = models.DateField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null= True)
     requisition_form = models.ImageField(upload_to = 'patientsForm/')
 
     

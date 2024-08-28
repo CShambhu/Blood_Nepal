@@ -37,13 +37,11 @@ def write_blog(request):
         blog_form = BlogForm(request.POST,request.FILES)
         if blog_form.is_valid():
             title = blog_form.cleaned_data['title']
-            date = blog_form.cleaned_data['date']
             content = blog_form.cleaned_data['content']
             am = Blog.objects.create(
                 user = user,
                 signup = signup,
                 title = title,
-                date = timezone.now(),
                 content = content
                 )
             am.save()
