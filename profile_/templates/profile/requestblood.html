@@ -74,16 +74,7 @@
           {{ P_Form.message }}
         </div>
         <div>
-          {% if messages %}
-            <div class="flex flex-wrap justify-center">
-              {% for message in messages %}
-                <div class="alert alert-warning alert-dismissible fade show mx-2 mb-2 flex items-center" role="alert">
-                  <span class="text-sm">{{ message }}</span>
-                  <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
+        {% include 'profile/display_message.html' %}
         </div>
         <button type="submit" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
       </form>

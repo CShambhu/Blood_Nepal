@@ -1,4 +1,4 @@
-{% extends 'profile/base.html' %} 
+{% extends 'profile/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -7,31 +7,23 @@
 
 {% block body %}
   <div class="container text-justify px-5 py-4 mx-auto">
-  <a href="{% url 'write_blog' %}">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
-        Write Blog
-  </button>
-</a>
-</div>
+    <a href="{% url 'home' %}"><button class="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500" type="submit">Back</button></a>
+    {% comment %} <a href="{% url 'write_blog' %}"><button class="bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500" type="submit">Write Blog</button></a> {% endcomment %}
+  </div>
   <section class="text-gray-600 body-font">
+    <div class="flex justify-center">
+      {% include 'profile/display_message.html' %}
+      </div>
+
     <div class="container px-5 py-1 mx-auto justify-content-centre">
       {% for blogs in blog_post %}
-          <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
+        <li>
+          <em>Author: {{ blogs.user }} | Title: {{ blogs.title }} | Date: {{ blogs.date }}</em>
         </li>
-          <a href="{% url 'read_post' blogs.id %}"> <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">  
-            Read More
-        </button> </a>
-          <a href="{% url 'delete_blog' blogs.id %}">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">  
-              Delete
-          </button>
-          </a> 
-          <a href="{% url 'update_blog' blogs.id %}">
-            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
-              Update
-          </button>
-          </a> 
-          <hr>
+        <a href="{% url 'read_post' blogs.id %}"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Read More</button></a>
+        <a href="{% url 'delete_blog' blogs.id %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
+        <a href="{% url 'update_blog' blogs.id %}"><button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Update</button></a>
+        <hr />
       {% endfor %}
     </div>
   </section>

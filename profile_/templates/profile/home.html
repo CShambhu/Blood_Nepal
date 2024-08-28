@@ -10,8 +10,9 @@
 
 {% block body %}
   <section class="text-gray-600 body-font bg-gray-100 min-h-screen">
+    
     <div class='flex justify-center items-center py-4'>
-      <strong class='text-xl md:text-2xl lg:text-3xl text-red-600'>"Keep the blood donation supply strong. You might need blood someday."</strong>
+      <strong class='text-xl md:text-2xl lg:text-3xl text-gray-600'>"Keep the blood donation supply strong. You might need blood someday."</strong>
     </div>
     <div class="container mx-auto flex flex-wrap px-5 py-6 items-center">
       
@@ -21,18 +22,15 @@
         {% comment %} <p class="leading-relaxed text-base">
           <strong >WE</strong> aims to connect the donor and receiver directly without any intervention for fresh blood requirements.
         </p> {% endcomment %}
-        <div class="mt-4">
+        <div class="mt-2">
           <div class="card text-center">
             <div class="text-xl md:text-2xl lg:text-3xl card-header text-red-600">Blood Nepal</div>
-            <div class="flex justify-center items-center" style="width: 18rem;">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Himal Blood Transfusion Center, phone: 986-2737316</li>
-                <li class="list-group-item">नेपाल रेडक्रस सोसाईटी रक्त बैंक, सोल्टीमोड, phone: 01-4288485</li>
-                <li class="list-group-item">Kantipur Hospital Blood Transfusion Service, phone: 01-4111692</li>
+            <div class="flex justify-center items-center w-72 h-72">
+              <ul class="list-group list-group-flush p-0 m-0">
+                <li class="list-group-item mb-2">Himal Blood Transfusion Center, phone: 986-2737316</li>
+                <li class="list-group-item mb-2">नेपाल रेडक्रस सोसाईटी रक्त बैंक, सोल्टीमोड, phone: 01-4288485</li>
+                <li class="list-group-item mb-2">Kantipur Hospital Blood Transfusion Service, phone: 01-4111692</li>
               </ul>
-            </div>
-            <div class="card-footer text-muted">
-              {% comment %}2 days ago{% endcomment %}
             </div>
           </div>
         </div>
@@ -41,13 +39,14 @@
       <!-- Conditional Content Based on Authentication -->
       {% if user.is_authenticated %}
       <div class="w-full md:w-1/2 md:pl-12">
+          {% include 'profile/display_message.html' %}
         <div class="flex flex-col md:flex-row items-start px-4 md:px-12 py-8 mb-6 space-y-4 md:space-y-0 md:space-x-8">
           <div class="flex-1">
-            <strong class="text-sm md:text-2xl lg:text-3xl text-red-600">
+            <strong class="text-sm md:text-2xl lg:text-3xl text-teal-600">
               WE
             </strong>
             <p class="text-base md:text-lg lg:text-xl mt-2">
-              aim to connect the donor and receiver directly without any intervention for fresh blood requirements.
+              aim to connect the <strong> Donor </strong> and <strong> Receiver </strong> directly without any intervention for fresh blood requirements.
             </p>
           </div>
           <div class="flex flex-col space-y-2">
@@ -64,33 +63,8 @@
           </div>
         </div>
       </div>
-      
-        {% comment %} <div class="w-full md:w-1/2 md:pl-12">
-          <div class='flex justify-start items-start px-12 py-8 mb-6 space-x-4 '>
-            <div class='flex justify-center items-center py-4'>
-              <strong class='text-sm md:text-2xl lg:text-3xl text-red-600'> WE </strong> aim to connect the donor and receiver directly without any intervention for fresh blood requirements.
-              </div>
-            <div><br>
-            <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">
-              <button class='btn btn-info'>Read Blogs</button>
-            </a>
-            <a href="{% url 'write_blog' %}" class="hover:text-red-500 text-xl font-semibold">
-              <button class='btn btn-info'>Wanna Write Blogs ??</button>
-            </a>
-          </div>
-        </div> {% endcomment %}
-          
-          {% comment %} <div class='flex justify items-center px-12 py-8 mb-6'>
-          <a href="{% url 'blog' %}" class="hover:text-red-500 text-xl font-semibold">
-           <button class='btn btn-info'> Read Blogs </button>
-          </a> 
-          <a href="{% url 'write_blog' %}" class="hover:text-red-500 text-xl font-semibold">
-            <button class='btn btn-info'>Wanna Write Blogs ?? </button>
-            </a> 
-          </div> {% endcomment %}
-
           <div class="text-base flex flex-col items-center">            
-            <section class="text-gray-600 body-font">
+            {% comment %} <section class="text-gray-600 body-font">
               <div class="container px-5 py-1 mx-auto justify-content-centre">
                 {% for blogs in blog_post %}
                     <li><em>Author: {{blogs.user}} |    Title: {{blogs.title}} | Date: {{blogs.date}} </em>
@@ -111,7 +85,7 @@
                     <hr>
                 {% endfor %}
               </div>
-            </section>
+            </section> {% endcomment %}
             </div>
         </div>
       {% else %}
@@ -128,7 +102,8 @@
                   <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
                   <input type="password" id="password" name="password" class="w-full border border-gray-300 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
                 </div>
-                
+                {% include 'profile/display_message.html' %}
+                  
                 <p class="text-center mb-4">
                   Already have an account? <a href="{% url 'register_user' %}" class="text-green-600 font-medium"><strong>Register</strong></a>
                 </p>

@@ -13,7 +13,7 @@
   </a>
     <form method="post" enctype="multipart/form-data" class="space-y-6">
       <div class="flex justify-center">
-        <strong>Sign Up Form</strong>
+        <strong class="text-sm md:text-xl lg:text-2xl text-navy-600">Sign Up Form</strong>
       </div>
       {% csrf_token %}
 
@@ -64,6 +64,7 @@
           <label for="ready_to_donate" class="text-sm font-medium text-gray-700">{{ form.ready_to_donate.label_tag }}</label>
           {{ form.ready_to_donate }}
         </div>  
+
       </div>
       <button type="submit" class="px-3 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
     </form>

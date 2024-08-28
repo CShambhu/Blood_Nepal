@@ -1,3 +1,4 @@
+from urllib import request
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
@@ -53,16 +54,15 @@ def write_blog(request):
             blog_form = BlogForm()
     else:
         messages.success(request,('Please complete your profile to write blog.'))
-        return redirect('blog')
+        return redirect('home')
     return render(request, "blog/write_blog.html", context)
-
 
 
 def blog(request):
     username = request.user.username # Gets the username of user who is logged in from User table
     blog_post = Blog.objects.all()
     context = {'username':username,'blog_post':blog_post}
-    return render(request, "profile/home.html", context)
+    return render(request, "blog/blog.html", context)
 
 
 class Delete_Blog(DeleteView):

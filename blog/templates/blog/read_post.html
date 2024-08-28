@@ -9,16 +9,13 @@
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-4 mx-auto">
       <a href="{% url 'blog' %}">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
-       
-          Back
-        </button>
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"> Back </button>
       </a>
-      <a href="{% url 'write_blog' %}">
+      {% comment %} <a href="{% url 'write_blog' %}">
     <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">  
           Write Blog
       </button>
-    </a>
+    </a> {% endcomment %}
     
 </div>
 

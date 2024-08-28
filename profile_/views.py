@@ -62,7 +62,7 @@ def profile(request):
         return render(request, "profile/profile.html", {'signup_user':signup_user, 'username': username})
     
     except SignUp.DoesNotExist:
-        messages.success(request,('Please fill up the below form to use features.'))
+        # messages.success(request,('Please fill up the below form to use features.'))
         return redirect('signup')
     
     
@@ -137,7 +137,7 @@ def save_Signup(request):
 
             )
             em.save()
-            # messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
+            messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
             return redirect('profile')
         else:
             form = SignUp_Form()
@@ -245,7 +245,7 @@ def request_blood(request,id):
         else:
             P_Form = PatientsForm()
     else:
-        messages.success(request,('Please complete your profile to request blood.'))
+        messages.success(request,(f'Please complete your profile to request blood.'))
         return redirect('donor')
     return render(request, "profile/requestblood.html", {'P_Form':P_Form, 'username':username,'signup':signup_donor})
 
