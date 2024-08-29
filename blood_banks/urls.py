@@ -1,5 +1,6 @@
 from django.urls import path
-from blood_banks import views
+from .views import BanksView
 urlpatterns = [
-    path('', views.banks, name='banks' ),
+    path('', BanksView.as_view(), name='bank-detail' ),
+
 ]
