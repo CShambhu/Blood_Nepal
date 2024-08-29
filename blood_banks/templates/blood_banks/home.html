@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="flex justify-center items-center w-72 h-72">
+        <ul class="list-group list-group-flush p-0 m-0">
+            {% for bank in bankdetails %}
+                <li class="list-group-item mb-2">
+                    {{ bank.blood_bank_name }}, {{ bank.blood_bank_location }}, phone: {{ bank.blood_bank_phone }}
+                </li>
+            {% empty %}
+                <li class="list-group-item mb-2">No blood banks found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

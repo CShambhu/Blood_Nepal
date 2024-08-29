@@ -19,13 +19,10 @@
       <!-- Content Section -->
       <div class="w-full md:w-1/2 md:pr-12 mb-10 md:mb-0 pb-10 border-b md:border-b-0 border-gray-200">
         <h1 class="text-2xl md:text-3xl font-medium title-font mb-2 text-gray-900"></h1>
-        {% comment %} <p class="leading-relaxed text-base">
-          <strong >WE</strong> aims to connect the donor and receiver directly without any intervention for fresh blood requirements.
-        </p> {% endcomment %}
         <div class="mt-2">
           <div class="card text-center space-x-6">
             <div class="text-xl md:text-2xl lg:text-3xl card-header text-red-600">Blood Nepal
-              {% if user.is_authenticated %}
+               {% if user.is_authenticated %} 
               <a href="{% url 'bank-detail' %}" class="absolute top-2 right-2 text-red-600 hover:text-red-500 focus:outline-none">
                 <button title="add blood bank details" class="btn btn-outline-success btn-sm">
                   <svg width="15" height="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -33,15 +30,26 @@
                   </svg>                  
               </button>
               </a>
-              {% endif %}
+               {% endif %} 
             </div>
             <div class="flex justify-center items-center w-72 h-72">
               <ul class="list-group list-group-flush p-0 m-0">
-                <li class="list-group-item mb-2">Himal Blood Transfusion Center, phone: 986-2737316</li>
-                <li class="list-group-item mb-2">नेपाल रेडक्रस सोसाईटी रक्त बैंक, सोल्टीमोड, phone: 01-4288485</li>
-                <li class="list-group-item mb-2">Kantipur Hospital Blood Transfusion Service, phone: 01-4111692</li>
+                  {% for bank in bankdetails %}
+                      <li class="list-group-item mb-2">
+                          {{ bank.blood_bank_name }}, {{ bank.blood_bank_location }}, phone: {{ bank.blood_bank_phone }}
+                      </li>
+                  {% empty %}
+                      <li class="list-group-item mb-2">No blood banks found.</li>
+                  {% endfor %}
               </ul>
-            </div>
+          </div>
+              {% comment %} <div class="flex justify-center items-center w-72 h-72">
+               <ul class="list-group list-group-flush p-0 m-0">
+                <li class="list-group-item mb-2">Nobel Blood Transfusion Centre,सिनामंगल राेड, 01-4110842</li>
+                <li class="list-group-item mb-2">नेपाल रेडक्रस सोसाईटी रक्त बैंक, सोल्टीमोड, phone: 01-4288485</li>
+                <li class="list-group-item mb-2">Kantipur Hospital Blood Transfusion Service, phone: 01-4111692</li> 
+              </ul> 
+            </div> {% endcomment %}
           </div>
         </div>
       </div>

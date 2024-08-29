@@ -1,7 +1,7 @@
 from typing import Any
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from blood_banks.forms import BloodBanksForm
 from blood_banks.models import BloodBanks
 
@@ -18,3 +18,17 @@ class BanksView(FormView):
         context = super().get_context_data(**kwargs)    
         context['username'] = self.request.user.username
         return context
+    
+class BanksDetailView(ListView):
+    template_name = 'profile/home.html'
+    model = BloodBanks
+    context_object_name = 'bankdetails'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)    
+        context['username'] = self.request.user.username
+        return context
+
+    
+
+    
