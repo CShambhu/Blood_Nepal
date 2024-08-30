@@ -17,6 +17,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView , DeleteView, FormView
 from datetime import date
 from django.utils import timezone
+from blood_banks.models import BloodBanks
 
 #Searching on basis of location/blood_group
 @login_required
@@ -157,9 +158,10 @@ def Login_User(request):
                 # messages.success(request, (f" Welcome "+username+"."))
                 
                 try :
+                    bankdetails = BloodBanks.objects.all()
                     signup_user = SignUp.objects.get(user = request.user)
                     # messages.success(request,('blood request sent.'))
-                    return render(request, "profile/home.html", {'signup_user':signup_user, 'username': username})
+                    return render(request, "profile/home.html", {'signup_user':signup_user, 'username': username, 'bankdetails':bankdetails})
                 
                 except SignUp.DoesNotExist:
                     messages.success(request,("Your data is incomplete. Please visit your profile."))

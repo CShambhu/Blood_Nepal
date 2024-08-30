@@ -4,9 +4,9 @@ from . views import Profile_list, Sent, Update_Profile, Delete_Profile, Received
 
 
 urlpatterns = [
+    path("Blood-Nepal", views.Login_User, name="login"),
     path("", views.Login_User, name="home"),
     path("profile", views.profile, name="profile"),
-    path("login/", views.Login_User, name="login"),
     path("signup", views.save_Signup, name="signup"),
     path("requestblood/<int:id>", views.request_blood, name="requestblood"),
     path("request-sent", Sent.as_view(), name="request-sent"),
