@@ -40,7 +40,7 @@ class Profile_list(LoginRequiredMixin,ListView):
     model = SignUp
     template_name = 'profile/donor.html'
     context_object_name = 'donors'
-    paginate_by = 2
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         # Get the default context
@@ -171,6 +171,8 @@ def Login_User(request):
                 return redirect('home') 
     if next_url:
         messages.info(request, 'Login is required.')
+        return redirect('home') 
+
     
     return render(request, 'profile/home.html', context)
 
