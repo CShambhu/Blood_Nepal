@@ -9,45 +9,10 @@
 <!-- SEARCHING -->
 
 {% block body %}
-  {% comment %} <div class=" bg-gray-300 flex justify-center p-2">
-    <form class="form-inline my-2 my-lg-8" action="{% url 'search' %}" method="post">
-      {% csrf_token %}
-      <input style="width: 20vw; border: 1px solid #4CAF50; padding: 8px; border-radius: 2px;" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div> {% endcomment %}
-  {% comment %} <div class="bg-gray-300 flex items-center justify-center">
-        <form class="form-inline my-2 my-lg-8" action="{% url 'search' %}" method="post">
-            {% csrf_token %}
-            <input class="w-full sm:w-80 border border-green-500 p-2 rounded" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-  </div>
 
-
-  {% if blood_search or location_search %}
-    <!-- searching by blood group -->
-    {% for donor in blood_search %}
-      {% include 'profile/partial_donor.html' %}
-    {% endfor %}
-
-    <!-- searching by location -->
-    {% for donor in location_search %}
-      {% include 'profile/partial_donor.html' %}
-    {% endfor %}
-
-  {% else %}
-    <div class="flex flex-col bg-gray-300 items-center justify-center text-center p-14">
-      <div class="alert alert-warning alert-dismissible fade show col-md-3" role="alert">
-        <strong>Data not available</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    </div>
-  {% endif %} {% endcomment %}
-  <!-- Full page container with gray background -->
-<div class="bg-gray-300  min-h-screen flex flex-col items-center justify-center">
+<div class="bg-gray-300 flex flex-col items-center justify-center mt-0 pt-0 pb-4">
   <!-- Form Section -->
-  <form class="form-inline my-4 my-lg-6" action="{% url 'search' %}" method="post">
+  <form class="form-inline my-12 my-lg-8" action="{% url 'search' %}" method="post">
       {% csrf_token %}
       <input class="w-full sm:w-80 border bg-green-100  p-2 rounded" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

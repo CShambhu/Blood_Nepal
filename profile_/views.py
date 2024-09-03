@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin, UpdateView , DeleteView, FormView
-from datetime import date
+from datetime import date, timedelta
 from django.utils import timezone
 from blood_banks.models import BloodBanks
 
@@ -121,8 +121,30 @@ def save_Signup(request):
             location =  form.cleaned_data['location']
             blood =  form.cleaned_data['blood_group']
             weight =  form.cleaned_data['weight']
-            donate = form.cleaned_data['ready_to_donate']
             last_donation = form.cleaned_data['last_donation']
+            ready_to_donate = form.cleaned_data['ready_to_donate']
+            
+            # # Initialize ready_to_donate with default value
+            # ready_to_donate = 'no'
+
+            # if last_donation:
+            #     # Ensure last_donation is a date object
+            #     if isinstance(last_donation, str):
+            #         # Convert string to date if necessary
+            #         last_donation = timezone.datetime.strptime(last_donation, "%Y-%m-%d").date()
+
+            #     # Calculate the date 3 months ago from today
+            #     three_months_ago = timezone.now().date() - timedelta(days=90)
+
+            #     # Check if the last donation was more than 3 months ago
+            #     if last_donation <= three_months_ago:
+            #         ready_to_donate = 'yes'
+                
+            #     # Debugging prints (Remove or comment out in production)
+            #     print("Last donation:", last_donation)
+            #     print("Three months ago:", three_months_ago)
+            #     print("Ready to donate:", ready_to_donate)
+            
             em = SignUp.objects.create(
                 user = user,
                 full_name = name, 
@@ -133,7 +155,7 @@ def save_Signup(request):
                 location = location,
                 blood_group = blood,
                 weight = weight,
-                ready_to_donate = donate,
+                ready_to_donate = ready_to_donate,
                 last_donation = last_donation
 
             )
