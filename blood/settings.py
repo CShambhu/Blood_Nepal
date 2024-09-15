@@ -43,12 +43,24 @@ INSTALLED_APPS = [
     'profile_.apps.ProfileConfig',
     'blog.apps.BlogConfig',
     'blood_banks.apps.BloodBanksConfig',
+    'rest_framework',
 
     'crispy_forms',
     # 'django-crispy-forms',
     'crispy_bootstrap4',
 
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,36 +1,29 @@
 {% extends 'profile/base.html' %}
 
-
 {% block title %}
-Donor's | Blood Nepal
-{% endblock title %}
+  Donor's | Blood Nepal
+{% endblock %}
 
 {% block body %}
-<div class=" bg-gray-300 flex justify-center">
-{% include 'profile/display_message.html' %}
-</div>
+  <div class="bg-white flex justify-center">
+    {% include 'profile/display_message.html' %}
+  </div>
 
-<div class=" w-full bg-gray-300 flex justify-center">
-  
-  
-  <form class="form-inline my-12 my-lg-8" action = "{% url 'search' %}" method = "post">
-    {% csrf_token %}
-    <input class="w-full sm:w-80 border bg-green-100 p-2 rounded" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" /> 
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</div>
+  <div class="w-full bg-white flex justify-center">
+    <form class="form-inline my-12 my-lg-8" action="{% url 'search' %}" method="post">
+      {% csrf_token %}
+      <input class="w-full sm:w-80 border p-2 rounded  bg-gray-100" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
 
+  {% for donor in donors %}
+    {% include 'profile/partial_donor.html' %}
+  {% empty %}
+    <div class="flex justify-center">
+      <strong>No Data Available</strong>
+    </div>
+  {% endfor %}
 
-{% for donor in donors  %}
-{% include 'profile/partial_donor.html' %}
-{% empty %}
-<div class=" flex justify-center">
-<strong>No Data Available</strong>
-</div>
-{% endfor %}
-
-{% include "profile/pagination.html" %}
-
-{% endblock body %}
-
-
+  {% comment %} {% include 'profile/pagination.html' %} {% endcomment %}
+{% endblock %}

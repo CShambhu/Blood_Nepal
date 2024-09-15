@@ -29,7 +29,8 @@ class SignUp_Form(forms.ModelForm):
     #     super().__init__(*args, **kwargs)
     #     # Make the full_name field read-only
     #     self.fields['full_name'].widget.attrs['readonly'] = True
-        
+
+    
 #Patients SignUp Form
 class PatientsForm(forms.ModelForm):
     class Meta:

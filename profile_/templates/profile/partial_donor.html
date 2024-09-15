@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center bg-gray-300">
+<div class="flex items-center justify-center bg-white">
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-info w-full max-w-lg mx-auto px-2 mb-1" data-bs-toggle="modal" data-bs-target="#donorModal{{ donor.id }}">
     <div class="flex items-center justify-center grid grid-cols-1 md:grid-cols-4 gap-1 p-1">
@@ -22,7 +22,8 @@
   </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="donorModal{{ donor.id }}" tabindex="-1" aria-labelledby="donorModalLabel{{ donor.id }}" aria-hidden="true">
+
+  <div class="modal fade bg-gray-300" id="donorModal{{ donor.id }}" tabindex="-1" aria-labelledby="donorModalLabel{{ donor.id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
@@ -39,18 +40,16 @@
             <div class="container mx-auto py-1">
               <div class="flex justify-center items-center">
                 <div class="w-full">
-                  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                  <div class="bg-white overflow-hidden">
                     <div class="flex">
                       <!-- Profile Image Section -->
                       <div class="w-1/3 bg-gradient-to-r from-blue-500 to-teal-500 flex items-center justify-center p-4">
-                        <a href="{{ donor.profile_photo.url }}">
-                          <img src="{{ donor.profile_photo.url }}" alt="Profile Photo" class="w-48 h-auto rounded-lg">
-                        </a>
+                        <a href="{{ donor.profile_photo.url }}"><img src="{{ donor.profile_photo.url }}" alt="Profile Photo" class="w-48 h-auto rounded-lg" /></a>
                       </div>
                       <!-- Profile Details Section -->
                       <div class="w-2/3 p-1">
                         <h6 class="text-xl font-semibold mb-1">Username: {{ donor.user }}</h6>
-                        <hr class="my-2 border-gray-300">
+                        <hr class="my-2 border-gray-300" />
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                           <div class="mb-3">
                             <h6 class="font-medium">Full Name</h6>
@@ -79,9 +78,7 @@
                           <div class="mb-3">
                             {% if donor.ready_to_donate == 'yes' %}
                               <label for="yes" class="text-green-600 font-medium">Is available for blood donation</label>
-                              <a href="{% url 'requestblood' donor.id %}">
-                                <button class="btn btn-outline-primary my-2">Request Blood</button>
-                              </a>
+                              <a href="{% url 'requestblood' donor.id %}"><button class="btn btn-outline-primary my-2">Request Blood</button></a>
                             {% else %}
                               <label for="no" class="text-red-600 font-medium">Is NOT available for blood donation</label>
                             {% endif %}
@@ -100,9 +97,5 @@
   </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> 

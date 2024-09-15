@@ -70,7 +70,6 @@ class PatientModelTestCase(TestCase):
             requisition_form ='images/photo.jpg',
         )
 
-
     def test_patient_content(self):
         self.assertEqual(self.patient.user.username, 'patientuser')
         # self.assertEqual(self.patient.blood_request_sent_by, self.sender)

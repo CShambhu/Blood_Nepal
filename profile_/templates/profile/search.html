@@ -10,11 +10,11 @@
 
 {% block body %}
 
-<div class="bg-gray-300 flex flex-col items-center justify-center mt-0 pt-0 pb-4">
+<div class="bg-white flex flex-col items-center justify-center mt-0 pt-0 pb-4">
   <!-- Form Section -->
   <form class="form-inline my-12 my-lg-8" action="{% url 'search' %}" method="post">
       {% csrf_token %}
-      <input class="w-full sm:w-80 border bg-green-100  p-2 rounded" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
+      <input class="w-full sm:w-80 border bg-gray-100 p-2 rounded" type="search" name="searched" placeholder="Enter Blood group or Location" aria-label="Search" />
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 
@@ -31,7 +31,7 @@
       {% endfor %}
 
   {% else %}
-      <div class="flex flex-col bg-gray-300 items-center justify-center text-center p-4 w-full h-full">
+      <div class="flex flex-col bg-white items-center justify-center text-center p-4 w-full h-full">
           <div class="alert alert-warning alert-dismissible fade show col-md-3" role="alert">
               <strong>Data not available</strong>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -40,6 +40,6 @@
   {% endif %}
 </div>
 
-  {% include 'profile/pagination.html' %}
+  {% comment %} {% include 'profile/pagination.html' %} {% endcomment %}
   
 {% endblock %}

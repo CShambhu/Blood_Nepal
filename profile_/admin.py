@@ -17,10 +17,9 @@ class PatientAdmin(admin.ModelAdmin):
     search_fields = ("id","blood_request_sent_by__full_name","blood_request_sent_to__full_name","message","patients_name","hospital","patients_blood_group","required_date")
 
 
-
-
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('id','reply_message')
+    list_display = ('id','reply_message','message_sent_by','message_sent_to')
+
 
 

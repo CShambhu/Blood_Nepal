@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include("blood_banks.urls")),
     path('', include("profile_.urls")),
     path('blog/', include("blog.urls")),
+    # path('api/', include('profile_.urls')),  # Include the DRF URLs here
 
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

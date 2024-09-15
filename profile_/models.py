@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,7 +26,7 @@ Blood_Group_Choices = [
 class SignUp(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE , unique=True)
     full_name = models.CharField(max_length = 120, null=False, blank=False )
-    email = models.EmailField( null=False, blank=False)
+    email = models.EmailField(unique=True, null=False, blank=False)
     phone = models.CharField(max_length=10,null=True)
     gender = models.CharField(max_length=6, choices= GenderChoices , default='Male')
     profile_photo = models.ImageField(upload_to = 'images/')
@@ -37,12 +38,17 @@ class SignUp(models.Model):
     
     def __str__(self):
         return self.full_name
+    
+    class Meta:
+        unique_together = ('email','phone')
+
 
 #Patients SignUp Form
 class Patient(models.Model):
+    
     user = models.ForeignKey(User, on_delete = models.CASCADE,null= True)
-    blood_request_sent_by = models.ForeignKey(SignUp,related_name='sent_by', on_delete=models.SET_NULL, null=True, blank=True)
-    blood_request_sent_to = models.ForeignKey(SignUp,related_name='sent_to', on_delete=models.SET_NULL, null=True, blank=False)
+    blood_request_sent_by = models.ForeignKey(SignUp,related_name='sent_by',verbose_name = "sender" , on_delete=models.PROTECT, null=True, blank=True)
+    blood_request_sent_to = models.ForeignKey(SignUp,related_name='sent_to',verbose_name= "receiver",  on_delete=models.PROTECT, null=True, blank=False)
     message = models.TextField(max_length = 50, null=True)
     # message_sent_by = models.ForeignKey(SignUp,related_name='message_by', on_delete=models.SET_NULL, null=True, blank=True)
     # message_sent_to = models.ForeignKey(SignUp,related_name='message_to', on_delete=models.SET_NULL, null=True, blank=True)
@@ -57,10 +63,18 @@ class Patient(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null= True)
     requisition_form = models.ImageField(upload_to = 'patientsForm/')
 
-    
     def __str__(self):
         return self.patients_name
     
+    
+    # class Meta:
+    #     unique_together = ('patients_phone',)
+    #     ordering  = ['user','patients_name','hospital','patients_department',
+    #                  'patients_gender','patients_phone','patients_blood_group',
+    #                  'blood_pint','required_date','created_at','requisition_form','blood_request_sent_by','blood_request_sent_to']
+    
+
+
 class Message(models.Model):
     reply_message = models.TextField(max_length = 50, null=True)
     message_sent_by = models.ForeignKey(SignUp,related_name='message_sent_by', on_delete=models.SET_NULL, null=True, blank=True)
@@ -68,4 +82,7 @@ class Message(models.Model):
     
     def __str__(self):
         return self.reply_message 
+    
+    # class Meta:
+    #     index_together = ('reply_message', 'message_sent_by')
     

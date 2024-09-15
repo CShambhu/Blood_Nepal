@@ -1,16 +1,15 @@
 <!-- Container div with fixed positioning for backdrop blur -->
-<div class="fixed inset-0 bg-gray-800 bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+<div class="fixed inset-0 bg-gray-700 bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
   <!-- Form container with relative positioning to position the close button -->
   <div class="relative bg-white max-w-3xl mx-auto p-2 border border-gray-300 rounded-lg shadow-md space-y-2">
-
-  <!-- Close button in the top-right corner -->
-  <a href="{% url 'home' %}" class="absolute top-2 right-2 text-red-600 hover:text-red-500 focus:outline-none">
-    <button class="btn btn-outline-danger btn-sm">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-    </svg>
-  </button>
-  </a>
+    <!-- Close button in the top-right corner -->
+    <a href="{% url 'home' %}" class="absolute top-2 right-2 text-red-600 hover:text-red-500 focus:outline-none">
+      <button class="btn btn-outline-danger btn-sm">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </a>
     <form method="post" enctype="multipart/form-data" class="space-y-6">
       <div class="flex justify-center">
         <strong class="text-sm md:text-xl lg:text-2xl text-navy-600">Sign Up Form</strong>
@@ -47,7 +46,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
         <div class="mb-1">
           <label for="blood_group" class="text-sm font-medium text-gray-700">{{ form.blood_group.label_tag }}</label>
           {{ form.blood_group }}
@@ -63,11 +62,12 @@
         <div class="mb-1">
           <label for="ready_to_donate" class="text-sm font-medium text-gray-700">{{ form.ready_to_donate.label_tag }}</label>
           {{ form.ready_to_donate }}
-        </div>  
-
+        </div><p>Note: It is recommended to wait 3 months between blood donations.</p>
       </div>
-      <button type="submit" class="px-3 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
+         <div>
+          {% include 'profile/display_message.html' %}
+          <button type="submit" class="px-3 py-2 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
     </form>
+      </div>  
   </div>
 </div>
-

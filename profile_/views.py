@@ -40,7 +40,7 @@ class Profile_list(LoginRequiredMixin,ListView):
     model = SignUp
     template_name = 'profile/donor.html'
     context_object_name = 'donors'
-    paginate_by = 4
+    # paginate_by = 4
 
     def get_context_data(self, **kwargs):
         # Get the default context
@@ -52,7 +52,6 @@ class Profile_list(LoginRequiredMixin,ListView):
     
 def home(request):
     return render(request, "profile/home.html")
-
 
 #profile of User who is logged in
 @login_required
@@ -145,23 +144,31 @@ def save_Signup(request):
             #     print("Three months ago:", three_months_ago)
             #     print("Ready to donate:", ready_to_donate)
             
-            em = SignUp.objects.create(
-                user = user,
-                full_name = name, 
-                email = email, 
-                phone = phone, 
-                gender = gender,
-                profile_photo = photo, 
-                location = location,
-                blood_group = blood,
-                weight = weight,
-                ready_to_donate = ready_to_donate,
-                last_donation = last_donation
+            # Check if email already exists
+            if not SignUp.objects.filter(email=email).exists():
+                # messages.info(request, "This email address is already in use.")
+                # return render(request, 'profile/signup.html', context)
+            
+                em = SignUp.objects.create(
+                                user = user,
+                                full_name = name, 
+                                email = email, 
+                                phone = phone, 
+                                gender = gender,
+                                profile_photo = photo, 
+                                location = location,
+                                blood_group = blood,
+                                weight = weight,
+                                ready_to_donate = ready_to_donate,
+                                last_donation = last_donation
 
-            )
-            em.save()
-            messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
-            return redirect('profile')
+                            )
+                em.save()
+                messages.success(request,("You have successfully completed your profile. Now you can utilize features. "))
+                return redirect('profile')
+            else:
+                messages.info(request, "This email address is already in use.")
+                return redirect('signup')
         else:
             form = SignUp_Form()
     return render(request, 'profile/signup.html', context)
@@ -258,6 +265,7 @@ def request_blood(request,id):
                                 
                             )
                         am.save()
+
                         messages.success(request,(f'You have sent blood request to {signup_donor}.'))
                         return redirect( "profile")
                     else:
@@ -295,27 +303,10 @@ class Sent(ListView):
         context['current_date'] = timezone.now().date()
         return context
 
-class Sent(ListView):
-    context_object_name = 'patients'
-    template_name = "profile/sent.html"
-    paginate_by = 2
-    def get_queryset(self):
-        user = self.request.user
-        try:
-            sign_up = SignUp.objects.get(user=user)
-            return Patient.objects.filter(blood_request_sent_by=sign_up)
-        except SignUp.DoesNotExist:
-            messages.success(self.request, 'You have not requested for blood yet.')
-    
-    def get_context_data(self):
-        context = super().get_context_data()
-        context['username'] = self.request.user.username
-        context['current_date'] = timezone.now().date()
-        return context
-
 
 class Received(Sent):
     template_name = "profile/received.html"
+
     def get_queryset(self):
         user = self.request.user
         try:
@@ -324,6 +315,12 @@ class Received(Sent):
         except SignUp.DoesNotExist:
             messages.success(self.request, 'You have not received any blood request yet.')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.user.username
+        context['current_date'] = timezone.now().date()
+
+        return context
 
 class Delete_Blood_Request(DeleteView):
     template_name = "profile/delete_blood_request.html"
@@ -368,3 +365,24 @@ class View_(FormView):
         return context
     
     
+import requests
+from django.http import JsonResponse
+
+def get_patients(request):
+    response = requests.get('http://http://127.0.0.1:8000/api/patients/')
+    data = response.json()
+    return JsonResponse(data, safe=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

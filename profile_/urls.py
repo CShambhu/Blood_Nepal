@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from profile_ import views
 from . views import Profile_list, Sent, Update_Profile, Delete_Profile, Received, Delete_Blood_Request, Msg_Form
 
@@ -20,15 +20,11 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('update-profile/<int:pk>/', Update_Profile.as_view(), name='update_profile'),
     path('delete_profile/<int:pk>/', Delete_Profile.as_view(), name='delete_profile'),
-
-
-
-
-   
-
-
     # path('sample', views.loginform, name='sample'),
     # path("save_signup", views.save_Signup, name="save_signup"),
     # path("save_user", views.save_User, name="save_user"),
     # path("employee", views.employee_data, name="employee"),
+    # API URLS 
+    path('api/', include('profile_.urls_api')),
 ]
+
