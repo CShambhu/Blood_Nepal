@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.db.models.query import QuerySet
 # from django.http import HttpRequest
 from django.http import HttpRequest
 from django.shortcuts import render,HttpResponse, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 # from django.views import View
 from profile_.forms import SignUp_Form, PatientsForm, MessageForm
 from .models import SignUp, Patient, Message
@@ -18,6 +19,9 @@ from django.views.generic.edit import FormMixin, UpdateView , DeleteView, FormVi
 from datetime import date, timedelta
 from django.utils import timezone
 from blood_banks.models import BloodBanks
+
+from django.core.mail import send_mail
+
 
 #Searching on basis of location/blood_group
 @login_required
@@ -221,12 +225,16 @@ def register_user(request):
 
 
 #Patient's Blood Request Form
-@login_required
+@login_required(login_url='/login/')
 def request_blood(request,id):
     username = request.user.username # Gets the username of user who is logged in from User table
     # Get the full data of donor to whom user is requesting 
     signup_donor = SignUp.objects.get(id = id) # gets the data of donor when requestblood is clicked
-    # signup_user = SignUp.objects.all() # gets the full data of donor on requestblood page. 
+    EMAIL_RECIPIENT = signup_donor.email
+    signup = get_object_or_404(SignUp, user=request.user)
+    
+    # Retrieve the full name
+    full_name = signup.full_name
     P_Form = PatientsForm()
     user_profile = SignUp.objects.filter(user=request.user).exists()
     if user_profile:
@@ -265,6 +273,22 @@ def request_blood(request,id):
                                 
                             )
                         am.save()
+
+                        # post_url = f"{request.build_absolute_uri()}{signup_donor.get_absolute_url()}"
+                        login_url = f"{request.build_absolute_uri(reverse('login'))}?next"
+                        subject = f'Blood Request From: User {user}'  # Make sure this is an instance
+                        message = (
+                                f'Greetings, {signup_donor}\n'
+                                f'{full_name} (username: {user}) has requested {patients_blood_group.title()} blood for '
+                                f'patient "{patients_name.title()}" who is admitted at {hospital.title()} hospital. \n'
+                                f'Blood Required Date: {required_date} \n'
+                                f'Status: {message.title()} \n'
+                                f'Please login to check out more details at {login_url}'
+)
+
+                        email_from = settings.DEFAULT_FROM_EMAIL
+                        recipient_list = [EMAIL_RECIPIENT]  # Add the recipient email
+                        send_mail(subject, message, email_from, recipient_list)
 
                         messages.success(request,(f'You have sent blood request to {signup_donor}.'))
                         return redirect( "profile")
@@ -365,14 +389,6 @@ class View_(FormView):
         return context
     
     
-import requests
-from django.http import JsonResponse
-
-def get_patients(request):
-    response = requests.get('http://http://127.0.0.1:8000/api/patients/')
-    data = response.json()
-    return JsonResponse(data, safe=False)
-
 
 
 

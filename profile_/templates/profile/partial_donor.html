@@ -79,7 +79,7 @@
                             {% if donor.ready_to_donate == 'yes' %}
                               <label for="yes" class="text-green-600 font-medium">Is available for blood donation</label>
                               <a href="{% url 'requestblood' donor.id %}"><button class="btn btn-outline-primary my-2">Request Blood</button></a>
-                            {% else %}
+                              {% else %}
                               <label for="no" class="text-red-600 font-medium">Is NOT available for blood donation</label>
                             {% endif %}
                           </div>
