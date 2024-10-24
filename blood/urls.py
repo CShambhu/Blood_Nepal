@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include("blood_banks.urls")),
     path('', include("profile_.urls")),
     path('blog/', include("blog.urls")),
+    path('accounts/', include('allauth.urls')),
     # path('api/', include('profile_.urls')),  # Include the DRF URLs here
 
 
